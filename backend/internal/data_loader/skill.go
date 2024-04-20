@@ -9,13 +9,16 @@ import (
 	"pvftools/backend/common/utils"
 	"pvftools/backend/dao"
 	"pvftools/backend/internal/data_source"
+	"pvftools/backend/internal/progress"
 	"pvftools/backend/model"
+	"strings"
 )
 
 type SkillDataLoader struct {
 	skillCh   chan *model.Skill
 	stopCh    chan struct{}
 	isRunning bool
+	pc        *progress.ProgressController
 }
 
 func (l *SkillDataLoader) Name() string {
@@ -44,6 +47,8 @@ func (l *SkillDataLoader) Load() {
 		return
 	}
 	l.isRunning = true
+	l.skillCh = make(chan *model.Skill)
+	l.stopCh = make(chan struct{})
 	log.LogInfo("skill loader start")
 	defer log.LogInfo("skill loader end")
 	go l.run()
@@ -51,6 +56,7 @@ func (l *SkillDataLoader) Load() {
 	c, err := ds.GetFileContent(consts.LstPathSkill)
 	if err != nil {
 		log.LogError("get %s content err %v", consts.LstPathSkill, err)
+		l.stopCh <- struct{}{}
 		return
 	}
 	lst := parser.NewLstParser(c)
@@ -61,7 +67,7 @@ func (l *SkillDataLoader) Load() {
 	}
 	items := make([]*SkillItem, 0)
 	for jobId, path := range lst.GetPathMap() {
-		realPath := "skill/" + path
+		realPath := "skill/" + strings.ToLower(path)
 		sc, err := ds.GetFileContent(realPath)
 		if err != nil {
 			log.LogError("get %s content err %v", path, err)
@@ -77,6 +83,7 @@ func (l *SkillDataLoader) Load() {
 			})
 		}
 	}
+	l.pc = progress.NewProgressController("技能", len(items))
 	utils.ConcurrentForEach(items, func(item *SkillItem) {
 		c, err := ds.GetFileContent(item.path)
 		if err != nil {
@@ -105,11 +112,13 @@ func (l *SkillDataLoader) run() {
 		select {
 		case skill := <-l.skillCh:
 			skillList = append(skillList, skill)
+			l.pc.Increase(1)
 		case <-l.stopCh:
 			log.LogInfo("skill total: %d", len(skillList))
 			if err := common.DB.Create(skillList).Error; err != nil {
 				log.LogError("save skill err %v", err)
 			}
+			l.pc.End()
 			return
 		}
 	}

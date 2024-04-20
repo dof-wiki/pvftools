@@ -8,15 +8,17 @@ import (
 )
 
 type ProgressController struct {
+	name    string
 	current int
 	total   int
 }
 
-func NewProgressController(total int) *ProgressController {
-	runtime.EventsEmit(*ctx.Ctx, consts.EventProgressStart, total)
+func NewProgressController(name string, total int) *ProgressController {
+	runtime.EventsEmit(*ctx.Ctx, consts.EventProgressStart, name, total)
 	return &ProgressController{
 		current: 0,
 		total:   total,
+		name:    name,
 	}
 }
 
@@ -28,7 +30,11 @@ func (p *ProgressController) Increase(c int) {
 	if p.current >= p.total {
 		p.current = p.total
 	}
-	runtime.EventsEmit(*ctx.Ctx, consts.EventProgressUpdate, p.current)
+	runtime.EventsEmit(*ctx.Ctx, consts.EventProgressUpdate, p.name, p.current)
+}
+
+func (p *ProgressController) End() {
+	runtime.EventsEmit(*ctx.Ctx, consts.EventProgressEnd, p.name)
 }
 
 func (p *ProgressController) GetProgress() float64 {

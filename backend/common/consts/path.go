@@ -4,7 +4,7 @@ package consts
 const (
 	LstPathCharacter = "character/character.lst"
 	LstPathEquipment = "equipment/equipment.lst"
-	LstPathSkill     = "skill/skill.lst"
+	LstPathSkill     = "skill/skilllist.lst"
 	LstPathStackable = "stackable/stackable.lst"
 )
 

@@ -10,6 +10,7 @@ import (
 	"pvftools/backend/common/utils"
 	"pvftools/backend/dao"
 	"pvftools/backend/internal/data_source"
+	"pvftools/backend/internal/progress"
 	"pvftools/backend/model"
 )
 
@@ -17,6 +18,7 @@ type StackableDataLoader struct {
 	stackableCh chan *model.Stackable
 	stopCh      chan struct{}
 	isRunning   bool
+	pc          *progress.ProgressController
 }
 
 func (l *StackableDataLoader) Name() string {
@@ -33,6 +35,8 @@ func (l *StackableDataLoader) Load() {
 		return
 	}
 	l.isRunning = true
+	l.stackableCh = make(chan *model.Stackable)
+	l.stopCh = make(chan struct{})
 	log.LogInfo("stackable loader start")
 	defer log.LogInfo("stackable loader end")
 	go l.run()
@@ -41,6 +45,7 @@ func (l *StackableDataLoader) Load() {
 	c, err := ds.GetFileContent(consts.LstPathStackable)
 	if err != nil {
 		log.LogError("get stackable lst content error: %v", err)
+		l.stopCh <- struct{}{}
 		return
 	}
 	lst := parser.NewLstParser(c)
@@ -48,9 +53,11 @@ func (l *StackableDataLoader) Load() {
 	err = common.DB.Unscoped().Where("1=1").Delete(new(model.Stackable)).Error
 	if err != nil {
 		log.LogError("delete stackable err %v", err)
+		l.stopCh <- struct{}{}
 		return
 	}
 	codes := lo.Keys(lst.GetPathMap())
+	l.pc = progress.NewProgressController("道具", len(codes))
 	utils.ConcurrentForEach(codes, func(code int) {
 		defer func() {
 			if err := recover(); err != nil {
@@ -87,15 +94,18 @@ func (l *StackableDataLoader) run() {
 		case <-l.stopCh:
 			if len(list) > 0 {
 				err := common.DB.Create(list).Error
+				l.pc.Increase(len(list))
 				if err != nil {
 					log.LogError("save stackable err %v", err)
 				}
 			}
+			l.pc.End()
 			return
 		case stk := <-l.stackableCh:
 			list = append(list, stk)
 			if len(list) >= 1000 {
 				err := common.DB.Create(list).Error
+				l.pc.Increase(len(list))
 				if err != nil {
 					log.LogError("save stackable err %v", err)
 				}

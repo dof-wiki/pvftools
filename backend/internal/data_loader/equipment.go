@@ -10,12 +10,14 @@ import (
 	"pvftools/backend/common/utils"
 	"pvftools/backend/dao"
 	"pvftools/backend/internal/data_source"
+	"pvftools/backend/internal/progress"
 	"pvftools/backend/model"
 )
 
 type EquipmentDataLoader struct {
 	equCh     chan *model.Equipment
 	stopCh    chan struct{}
+	pc        *progress.ProgressController
 	isRunning bool
 }
 
@@ -33,6 +35,8 @@ func (l *EquipmentDataLoader) Load() {
 		return
 	}
 	l.isRunning = true
+	l.equCh = make(chan *model.Equipment)
+	l.stopCh = make(chan struct{})
 	log.LogInfo("load equipment start.")
 	defer log.LogInfo("load equipment end.")
 	go l.run()
@@ -41,6 +45,7 @@ func (l *EquipmentDataLoader) Load() {
 	c, err := ds.GetFileContent(consts.LstPathEquipment)
 	if err != nil {
 		log.LogError("get %s content err %v", consts.LstPathEquipment, err)
+		l.stopCh <- struct{}{}
 		return
 	}
 
@@ -49,10 +54,12 @@ func (l *EquipmentDataLoader) Load() {
 	err = common.DB.Unscoped().Where("1=1").Delete(&model.Equipment{}).Error
 	if err != nil {
 		log.LogError("delete equ error %v", err)
+		l.stopCh <- struct{}{}
 		return
 	}
 
 	codes := lo.Keys(p.GetPathMap())
+	l.pc = progress.NewProgressController("装备", len(codes))
 	utils.ConcurrentForEach(codes, func(code int) {
 		defer func() {
 			if r := recover(); r != nil {
@@ -106,7 +113,9 @@ func (l *EquipmentDataLoader) run() {
 					log.LogError("save equipment err %v", err)
 					return
 				}
+				l.pc.Increase(len(equList))
 			}
+			l.pc.End()
 			return
 		case equ := <-l.equCh:
 			equList = append(equList, equ)
@@ -116,6 +125,7 @@ func (l *EquipmentDataLoader) run() {
 					log.LogError("save equipment err %v", err)
 					return
 				}
+				l.pc.Increase(len(equList))
 				equList = make([]*model.Equipment, 0, 1000)
 			}
 		}
