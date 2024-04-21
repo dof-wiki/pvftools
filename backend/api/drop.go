@@ -3,22 +3,25 @@ package api
 import (
 	"errors"
 	"pvftools/backend/common/consts"
+	"pvftools/backend/common/log"
 	"pvftools/backend/common/utils"
 	"pvftools/backend/internal/world_drop"
 )
 
-func (a *App) GetHellDrop() ([]int, []int, error) {
+func (a *App) GetHellDrop() ([]int, error) {
 	p := a.getParser(consts.PathHellDrop)
 	data, err := p.GetInts(consts.LabelBasisOfRarityDicision)
 	if err != nil {
-		return nil, nil, err
+		log.LogError("数据错误%v", err)
+		return nil, err
 	}
 	if len(data) != 13 {
-		return nil, nil, errors.New("数据错误")
+		log.LogError("数据错误")
+		return nil, errors.New("数据错误")
 	}
 	hard := utils.CalcPercentageDropRate(data[1:6])
 	veryHard := utils.CalcPercentageDropRate(data[7:12])
-	return hard, veryHard, nil
+	return append(hard, veryHard...), nil
 }
 
 func (a *App) SetHellDrop(hard, veryHard []int) error {
@@ -33,13 +36,14 @@ func (a *App) SetHellDrop(hard, veryHard []int) error {
 	}
 	val = append(val, 1000001, 1000002)
 	p.SetInts(consts.LabelBasisOfRarityDicision, val)
-	return a.saveData(consts.LabelBasisOfRarityDicision)
+	return a.saveData(consts.PathHellDrop)
 }
 
 func (a *App) GetMonsterDrop() ([][]int, error) {
 	p := a.getParser(consts.PathMonsterDrop)
 	data, err := p.GetInts(consts.LabelBasisOfRarityDicision)
 	if err != nil {
+		log.LogError("数据加载失败%v", err)
 		return nil, err
 	}
 	rates := make([][]int, 0, 4)

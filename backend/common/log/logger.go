@@ -1,7 +1,11 @@
 package log
 
 import (
+	"fmt"
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"os"
+	"pvftools/backend/common/consts"
+	"pvftools/backend/common/ctx"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -77,6 +81,9 @@ func LogWarn(format string, args ...interface{}) {
 }
 
 func LogError(format string, args ...interface{}) {
+	if ctx.Ctx != nil {
+		runtime.EventsEmit(*ctx.Ctx, consts.EventProgressEnd, fmt.Sprintf(format, args...))
+	}
 	sugaredLogger.Errorf(format, args...)
 }
 

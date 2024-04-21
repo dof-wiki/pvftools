@@ -13,7 +13,7 @@ import (
 type App struct {
 	ctx context.Context
 
-	cacheMu     sync.Mutex
+	cacheMu     sync.RWMutex
 	parserCache map[string]*parser.Parser
 	lstParser   map[string]*parser.LstParser
 }
@@ -32,9 +32,7 @@ func (a *App) Startup(_ctx context.Context) {
 	ctx.Ctx = &_ctx
 }
 
-func (a *App) getParser(path string) *parser.Parser {
-	a.cacheMu.Lock()
-	defer a.cacheMu.Unlock()
+func (a *App) getParserInner(path string) *parser.Parser {
 	if _, ok := a.parserCache[path]; !ok {
 		c, err := data_source.GetDataSource().GetFileContent(path)
 		if err != nil {
@@ -46,9 +44,15 @@ func (a *App) getParser(path string) *parser.Parser {
 	return a.parserCache[path]
 }
 
+func (a *App) getParser(path string) *parser.Parser {
+	a.cacheMu.RLock()
+	defer a.cacheMu.RUnlock()
+	return a.getParserInner(path)
+}
+
 func (a *App) getLstParser(path string) *parser.LstParser {
-	a.cacheMu.Lock()
-	defer a.cacheMu.Unlock()
+	a.cacheMu.RLock()
+	defer a.cacheMu.RUnlock()
 	if _, ok := a.lstParser[path]; !ok {
 		c, err := data_source.GetDataSource().GetFileContent(path)
 		if err != nil {
@@ -63,8 +67,5 @@ func (a *App) getLstParser(path string) *parser.LstParser {
 func (a *App) saveData(path string) error {
 	a.cacheMu.Lock()
 	defer a.cacheMu.Unlock()
-	if _, ok := a.parserCache[path]; !ok {
-		return nil
-	}
-	return data_source.GetDataSource().SaveFileContent(path, a.getParser(path).Render())
+	return data_source.GetDataSource().SaveFileContent(path, a.getParserInner(path).Render())
 }
