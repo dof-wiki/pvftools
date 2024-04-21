@@ -7,6 +7,7 @@ import (
 	"path"
 	"pvftools/backend/common"
 	"pvftools/backend/common/consts"
+	"pvftools/backend/common/log"
 	"pvftools/backend/internal/script"
 	"pvftools/backend/model"
 	"strings"
@@ -37,11 +38,13 @@ func (a *App) QueryEquipments(cond EquQueryCond) ([]*model.Equipment, error) {
 func (a *App) EquipmentBatchHandle(idList []int, actionList []*script.Action) error {
 	lst := a.getLstParser(consts.LstPathEquipment)
 	for _, code := range idList {
-		path := lst.GetPath(code)
-		realPath := "equipment/" + path
+		realPath := "equipment/" + lst.GetPath(code)
 		p := a.getParser(realPath)
 		for _, act := range actionList {
 			act.Run(p)
+		}
+		if err := a.saveData(realPath); err != nil {
+			log.LogError("%s保存失败", realPath)
 		}
 	}
 	return nil

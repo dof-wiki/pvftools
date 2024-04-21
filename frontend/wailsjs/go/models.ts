@@ -153,7 +153,7 @@ export namespace script {
 	
 	export class Action {
 	    type: string;
-	    args: any[];
+	    args: string[];
 	
 	    static createFrom(source: any = {}) {
 	        return new Action(source);

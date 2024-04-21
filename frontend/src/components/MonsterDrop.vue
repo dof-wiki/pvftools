@@ -5,8 +5,8 @@ import DropForm from "./DropForm.vue";
 
 const props = defineProps<{
   title: string,
-  getRate:() => Promise<Array<Array<number>>>,
-  saveRate: (rate: Array<Array<number>>) => Promise<boolean>,
+  getRate:() => Promise<Array<any>>,
+  saveRate: (rate: Array<any>) => Promise<void>,
 }>()
 
 const message = useMessage()
@@ -57,7 +57,6 @@ const saveRates = async () => {
     return
   }
   try {
-    console.log('~~~~~~~~~~~~', [monsterRate1.value, monsterRate2.value, monsterRate3.value, monsterRate4.value])
     await props.saveRate([monsterRate1.value, monsterRate2.value, monsterRate3.value, monsterRate4.value])
     message.success('保存成功')
   } catch (e) {

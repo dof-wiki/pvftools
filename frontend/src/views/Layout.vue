@@ -34,7 +34,7 @@ const menuItems = [
   {
     name: '装备批处理',
     icon: CopyOutline,
-    to: '/equbatch',
+    to: '/batch',
   },
 ]
 

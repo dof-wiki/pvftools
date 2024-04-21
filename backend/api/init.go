@@ -22,6 +22,7 @@ type App struct {
 func NewApp() *App {
 	return &App{
 		parserCache: make(map[string]*parser.Parser),
+		lstParser:   make(map[string]*parser.LstParser),
 	}
 }
 
