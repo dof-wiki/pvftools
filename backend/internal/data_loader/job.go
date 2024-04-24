@@ -51,7 +51,7 @@ func (l *JobDataLoader) Load() {
 			log.LogError("get jobname err %v", err)
 			continue
 		}
-		groupTypeName, err := jp.GetStrings("grouptype name")
+		groupTypeName, err := jp.GetStrings("growtype name")
 		if err != nil {
 			log.LogError("get group type name err %v", err)
 			continue

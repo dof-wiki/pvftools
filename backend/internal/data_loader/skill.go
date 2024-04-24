@@ -34,7 +34,7 @@ func (l *SkillDataLoader) CheckUpdate() bool {
 	}
 	lst := parser.NewLstParser(c)
 	for _, path := range lst.GetPathMap() {
-		if CheckUpdateByMd5("skill/" + path) {
+		if CheckUpdateByMd5("skill/" + strings.ToLower(path)) {
 			return true
 		}
 	}
@@ -83,6 +83,12 @@ func (l *SkillDataLoader) Load() {
 			})
 		}
 	}
+	err = common.DB.Unscoped().Where("1=1").Delete(&model.Skill{}).Error
+	if err != nil {
+		log.LogError("delete skill error %v", err)
+		l.stopCh <- struct{}{}
+		return
+	}
 	l.pc = progress.NewProgressController("技能", len(items))
 	utils.ConcurrentForEach(items, func(item *SkillItem) {
 		c, err := ds.GetFileContent(item.path)
@@ -115,8 +121,10 @@ func (l *SkillDataLoader) run() {
 			l.pc.Increase(1)
 		case <-l.stopCh:
 			log.LogInfo("skill total: %d", len(skillList))
-			if err := common.DB.Create(skillList).Error; err != nil {
-				log.LogError("save skill err %v", err)
+			if len(skillList) > 0 {
+				if err := common.DB.Create(skillList).Error; err != nil {
+					log.LogError("save skill err %v", err)
+				}
 			}
 			l.pc.End()
 			return

@@ -40,6 +40,7 @@ func (a *App) GetSkillDetail(id int) (*SkillData, error) {
 	sklData := new(SkillData)
 	sklData.Code = m.Code
 	sklData.JobStr = consts.JobID2Name[m.Job]
+	sklData.Name = m.Name
 
 	dungeon := p.GetAny(consts.LabelDungeon)
 	var levelInfo, staticData []int
@@ -47,8 +48,14 @@ func (a *App) GetSkillDetail(id int) (*SkillData, error) {
 		levelInfo, _ = p.GetInts(consts.LabelLevelInfo)
 		staticData, _ = p.GetInts(consts.LabelStaticData)
 	} else {
-		levelInfo, _ = dungeon.GetSub(consts.LabelLevelInfo).GetInts()
-		staticData, _ = dungeon.GetSub(consts.LabelStaticData).GetInts()
+		levelInfoLabel := dungeon.GetSub(consts.LabelLevelInfo)
+		if levelInfoLabel != nil {
+			levelInfo, _ = levelInfoLabel.GetInts()
+		}
+		staticDataLabel := dungeon.GetSub(consts.LabelStaticData)
+		if staticDataLabel != nil {
+			staticData, _ = staticDataLabel.GetInts()
+		}
 	}
 	sklData.StaticData = staticData
 	if len(levelInfo) > 0 {
@@ -84,14 +91,18 @@ func (a *App) setSkillData(path string, static []int, level [][]int) error {
 	p := a.getParser(path)
 	dungeon := p.GetAny(consts.LabelDungeon)
 	if dungeon == nil {
-		p.SetInts(consts.LabelStaticData, static, true)
+		if len(static) > 0 {
+			p.SetInts(consts.LabelStaticData, static, true)
+		}
 		curLevelInfo, _ := p.GetInts(consts.LabelLevelInfo)
 		if len(curLevelInfo) > 0 {
 			num := curLevelInfo[0]
 			p.SetInts(consts.LabelLevelInfo, append([]int{num}, lo.Flatten(level)...), true)
 		}
 	} else {
-		dungeon.SetSub(consts.LabelStaticData, parser.GenTokens(static), true)
+		if len(static) > 0 {
+			dungeon.SetSub(consts.LabelStaticData, parser.GenTokens(static), true)
+		}
 		curLevelInfo, _ := dungeon.GetSub(consts.LabelLevelInfo).GetInts()
 		if len(curLevelInfo) > 0 {
 			num := curLevelInfo[0]

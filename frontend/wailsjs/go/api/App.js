@@ -42,6 +42,10 @@ export function GetItemsName(arg1) {
   return window['go']['api']['App']['GetItemsName'](arg1);
 }
 
+export function GetJobInfo() {
+  return window['go']['api']['App']['GetJobInfo']();
+}
+
 export function GetJobSkill(arg1) {
   return window['go']['api']['App']['GetJobSkill'](arg1);
 }

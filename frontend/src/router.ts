@@ -3,12 +3,14 @@ import IndexView from "./views/IndexView.vue";
 import WorldDropView from "./views/WorldDropView.vue";
 import DropView from "./views/DropView.vue";
 import BatchHandleView from "./views/BatchHandleView.vue";
+import SkillView from "./views/SkillView.vue";
 
 const routes: RouteRecordRaw[] = [
     { path: '/', component: IndexView },
     { path: '/worlddrop', component: WorldDropView },
     { path: '/drop', component: DropView },
     { path: '/batch', component: BatchHandleView },
+    { path: '/skill', component: SkillView },
 ]
 
 const router = createRouter({

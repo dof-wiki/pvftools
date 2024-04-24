@@ -126,6 +126,28 @@ export namespace model {
 	        this.mini_level = source["mini_level"];
 	    }
 	}
+	export class Job {
+	    id: number;
+	    code: number;
+	    job: string;
+	    grow_type: number;
+	    grow_type_name: string;
+	    job_name: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Job(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
+	        this.code = source["code"];
+	        this.job = source["job"];
+	        this.grow_type = source["grow_type"];
+	        this.grow_type_name = source["grow_type_name"];
+	        this.job_name = source["job_name"];
+	    }
+	}
 	export class Skill {
 	    id: number;
 	    job: number;

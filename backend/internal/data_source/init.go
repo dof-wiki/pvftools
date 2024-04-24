@@ -12,8 +12,10 @@ type IDataSource interface {
 }
 
 var dataSource IDataSource
+var dataMode string
 
 func createDataSource() IDataSource {
+	dataMode = setting.UserSettings.Mode
 	if setting.UserSettings.Mode == setting.ModePvfUtility {
 		return pvf_source.NewPvfUtilitySource(setting.UserSettings.Target)
 	} else {
@@ -23,6 +25,9 @@ func createDataSource() IDataSource {
 
 func GetDataSource() IDataSource {
 	if dataSource == nil {
+		dataSource = createDataSource()
+	}
+	if dataMode != setting.UserSettings.Mode {
 		dataSource = createDataSource()
 	}
 	return dataSource

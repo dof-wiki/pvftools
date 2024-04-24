@@ -27,6 +27,8 @@ export function GetHellDrop():Promise<Array<number>>;
 
 export function GetItemsName(arg1:Array<number>):Promise<{[key: number]: string}>;
 
+export function GetJobInfo():Promise<Array<model.Job>>;
+
 export function GetJobSkill(arg1:number):Promise<Array<model.Skill>>;
 
 export function GetMonsterDrop():Promise<Array<any>>;

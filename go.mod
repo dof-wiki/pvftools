@@ -7,14 +7,14 @@ toolchain go1.22.1
 require (
 	github.com/adrg/xdg v0.4.0
 	github.com/glebarez/sqlite v1.11.0
-	github.com/wailsapp/wails/v2 v2.8.1
+	github.com/wailsapp/wails/v2 v2.8.0
 	go.uber.org/zap v1.27.0
 	gorm.io/gorm v1.25.9
 )
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
-	github.com/dof-wiki/godof v1.0.5
+	github.com/dof-wiki/godof v1.0.6
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/glebarez/go-sqlite v1.21.2 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
