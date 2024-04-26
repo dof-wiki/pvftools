@@ -22,6 +22,14 @@ export function ExportFiles(arg1) {
   return window['go']['api']['App']['ExportFiles'](arg1);
 }
 
+export function GenBox(arg1) {
+  return window['go']['api']['App']['GenBox'](arg1);
+}
+
+export function GenRandomBox(arg1) {
+  return window['go']['api']['App']['GenRandomBox'](arg1);
+}
+
 export function GetClearRewardDrop() {
   return window['go']['api']['App']['GetClearRewardDrop']();
 }
