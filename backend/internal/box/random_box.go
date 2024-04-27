@@ -23,13 +23,13 @@ func GenerateRandomBox(params *BoxParams) *parser.Parser {
 	subParser := parser.NewParser("")
 	for _, group := range params.Items {
 		vals := make([]int, 0)
+		vals = append(vals, 1)
 		for _, item := range group.Items {
 			vals = append(vals, item.Id, item.Rate, item.Count)
 		}
 		subParser.AddAny(consts.LabelEtc, parser.GenTokens(vals), true)
 	}
-	tokens := parser.GenTokenList(1)
-	tokens = append(tokens, subParser.GetTokens()...)
+	tokens := subParser.GetTokens()
 	p.SetAny(consts.LabelBoosterInfo, tokens, true)
 	return p
 }

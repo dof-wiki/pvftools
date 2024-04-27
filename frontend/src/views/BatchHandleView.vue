@@ -386,7 +386,7 @@ onMounted(() => {
         <div class="flex w-[30vw] mt-2 items-center" v-show="equipments.length > 0">
           <n-input v-model:value="filters2.name" placeholder="输入关键字筛选"></n-input>
           <span class="mx-2">Lv</span>
-          <n-slider v-model:value="filters2.minLevel" range show-tooltip></n-slider>
+          <n-slider v-model:value="filters2.minLevel" range></n-slider>
         </div>
       </div>
       <div class="flex items-center mt-2">
