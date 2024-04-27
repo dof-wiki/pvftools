@@ -9,6 +9,7 @@ import (
 	"pvftools/backend/dao"
 	"pvftools/backend/internal/data_source"
 	"pvftools/backend/model"
+	"strings"
 )
 
 type JobDataLoader struct{}
@@ -39,7 +40,7 @@ func (l *JobDataLoader) Load() {
 	}
 	jobs := make([]*model.Job, 0)
 	for code, path := range p.GetPathMap() {
-		realPath := "character/" + path
+		realPath := "character/" + strings.ToLower(path)
 		jc, err := ds.GetFileContent(realPath)
 		if err != nil {
 			log.LogError("get file content error %v", err)
