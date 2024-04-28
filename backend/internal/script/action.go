@@ -3,6 +3,7 @@ package script
 import (
 	"github.com/dof-wiki/godof/parser"
 	"pvftools/backend/common/consts"
+	"pvftools/backend/common/log"
 	"pvftools/backend/common/utils"
 )
 
@@ -19,6 +20,11 @@ type Action struct {
 }
 
 func (a *Action) Run(p *parser.Parser) {
+	defer func() {
+		if err := recover(); err != nil {
+			log.LogError("error: %v", err)
+		}
+	}()
 	switch a.Type {
 	case ActionSet:
 		if len(a.Args) < 2 {

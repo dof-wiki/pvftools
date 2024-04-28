@@ -79,7 +79,7 @@ func (l *SkillDataLoader) Load() {
 			items = append(items, &SkillItem{
 				jobId: jobId,
 				code:  code,
-				path:  "skill/" + v,
+				path:  "skill/" + strings.ToLower(v),
 			})
 		}
 	}

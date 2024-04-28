@@ -7,7 +7,7 @@ toolchain go1.22.1
 require (
 	github.com/adrg/xdg v0.4.0
 	github.com/glebarez/sqlite v1.11.0
-	github.com/wailsapp/wails/v2 v2.8.0
+	github.com/wailsapp/wails/v2 v2.8.1
 	go.uber.org/zap v1.27.0
 	gorm.io/gorm v1.25.9
 )

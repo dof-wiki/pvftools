@@ -60,12 +60,13 @@ func (a *App) ExportFiles(paths []string) error {
 	}
 
 	filepath := path.Join(dirPath, filename)
-	data := []byte(strings.Join(paths, "\n"))
+	data := strings.Join(paths, "\r\n")
+	fmt.Println(data)
 	file, err := os.Create(filepath)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
-	_, err = file.Write(data)
+	_, err = file.WriteString(data)
 	return err
 }
