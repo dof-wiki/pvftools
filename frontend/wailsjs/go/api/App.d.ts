@@ -52,6 +52,8 @@ export function SaveFile(arg1:string,arg2:string):Promise<void>;
 
 export function SaveWorldDropData():Promise<void>;
 
+export function SearchByName(arg1:string):Promise<Array<api.SearchResult>>;
+
 export function SetClearRewardDrop(arg1:Array<number>):Promise<void>;
 
 export function SetHellDrop(arg1:Array<number>,arg2:Array<number>):Promise<void>;

@@ -3,7 +3,7 @@ import {computed, h, onMounted, reactive, ref} from "vue";
 import {box} from "../../wailsjs/go/models";
 import BoxItemGroup = box.BoxItemGroup;
 import {NButton, useMessage, useModal } from "naive-ui";
-import {GenBox, GenRandomBox, SaveFile} from "../../wailsjs/go/api/App";
+import {GenBox, SaveFile} from "../../wailsjs/go/api/App";
 import BoxParams = box.BoxParams;
 import RarityRadio from "../components/RarityRadio.vue";
 import InputModal from "../components/InputModal.vue";

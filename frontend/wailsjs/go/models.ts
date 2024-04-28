@@ -16,6 +16,20 @@ export namespace api {
 	        this.part_set_type = source["part_set_type"];
 	    }
 	}
+	export class SearchResult {
+	    id: number;
+	    name: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new SearchResult(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
+	        this.name = source["name"];
+	    }
+	}
 	export class SkillDescription {
 	    tp: number;
 	    idx: number;

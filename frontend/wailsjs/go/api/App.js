@@ -90,6 +90,10 @@ export function SaveWorldDropData() {
   return window['go']['api']['App']['SaveWorldDropData']();
 }
 
+export function SearchByName(arg1) {
+  return window['go']['api']['App']['SearchByName'](arg1);
+}
+
 export function SetClearRewardDrop(arg1) {
   return window['go']['api']['App']['SetClearRewardDrop'](arg1);
 }
