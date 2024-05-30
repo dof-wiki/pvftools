@@ -6,8 +6,9 @@ import {EquipmentBatchHandle, ExportFiles, GetFileContent, QueryEquipments} from
 import EquQueryCond = api.EquQueryCond;
 import {TableColumn} from "naive-ui/es/data-table/src/interface";
 import {DataTableRowKey, NButton, useMessage} from "naive-ui";
-import {eq, uniqBy} from "lodash";
+import {uniqBy} from "lodash";
 import Action = script.Action;
+import {EquTypes} from "../common/consts";
 
 const actionOptions = [
   { label: '设置字段', value: 'set' },
@@ -33,53 +34,6 @@ const choiceAllRarity = () => {
   }
   filters.rarity = [0, 1, 2, 3, 4, 5, 6, 7]
 }
-
-const EquTypes = [
-  {
-    label: '武器',
-    value: 'weapon',
-  },
-  {
-    label: '上衣',
-    value: 'coat',
-  },
-  {
-    label: '下装',
-    value: 'pants',
-  },
-  {
-    label: '肩甲',
-    value: 'shoulder',
-  },
-  {
-    label: '腰带',
-    value: 'waist',
-  },
-  {
-    label: '鞋子',
-    value: 'shoes',
-  },
-  {
-    label: '项链',
-    value: 'amulet',
-  },
-  {
-    label: '手镯',
-    value: 'wrist',
-  },
-  {
-    label: '戒指',
-    value: 'ring',
-  },
-  {
-    label: '辅助装备',
-    value: 'support',
-  },
-  {
-    label: '魔法石',
-    value: 'magic stone',
-  },
-]
 
 const choiceAllTypes = () => {
   if (filters.types.length === EquTypes.length) {

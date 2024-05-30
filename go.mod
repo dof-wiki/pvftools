@@ -7,14 +7,14 @@ toolchain go1.22.1
 require (
 	github.com/adrg/xdg v0.4.0
 	github.com/glebarez/sqlite v1.11.0
-	github.com/wailsapp/wails/v2 v2.8.1
+	github.com/wailsapp/wails/v2 v2.8.0
 	go.uber.org/zap v1.27.0
 	gorm.io/gorm v1.25.9
 )
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
-	github.com/dof-wiki/godof v1.0.7
+	github.com/dof-wiki/godof v1.0.11
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/glebarez/go-sqlite v1.21.2 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
@@ -46,7 +46,7 @@ require (
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
 	golang.org/x/net v0.20.0 // indirect
 	golang.org/x/sys v0.16.0 // indirect
-	golang.org/x/text v0.14.0 // indirect
+	golang.org/x/text v0.15.0 // indirect
 	modernc.org/libc v1.22.5 // indirect
 	modernc.org/mathutil v1.5.0 // indirect
 	modernc.org/memory v1.5.0 // indirect

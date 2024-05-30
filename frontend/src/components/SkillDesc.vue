@@ -35,17 +35,23 @@ const skillDesc = computed(() => {
       // 每匹配成功, dataCount + 1
       dataCount++
       let data = -1
+      let sup = ''
       if (desc.tp >= 0) {
         data = props.skillDetail.static_data[desc.idx]
+        sup = `静态${desc.idx}`
       } else {
         if (props.skillDetail.level_data) {
           const levelData = props.skillDetail.level_data[showLevel.value - 1]
           data = levelData[desc.idx]
+          sup = `lv${desc.idx}`
         }
       }
       data *= desc.rate
       if (!Number.isInteger(desc.rate)) {
-        return data.toFixed(String(desc.rate).length - 2)
+        return data.toFixed(String(desc.rate).length - 2) + `<sup>${sup}</sup>`
+      }
+      if (sup) {
+        return `${data}<sup>${sup}</sup>`
       }
       return String(data)
     })
@@ -73,9 +79,11 @@ const skillDesc = computed(() => {
     </div>
     <div class="mt-2 max-h-[40vh] overflow-auto w-full">
       <div v-for="item in skillDesc" :key="item.tmpl" class="mt-1 flex w-full justify-between">
-        <p>{{ item.tmpl }}</p>
+        <p v-html="item.tmpl"></p>
         <n-button-group>
-          <n-button v-for="(idx, i) in item.indexes" :key="idx" @click="onEdit(idx)">数值{{ i + 1 }}</n-button>
+          <n-button v-for="(idx, i) in item.indexes" :key="idx" @click="onEdit(idx)">
+            数值{{ i + 1 }}
+          </n-button>
         </n-button-group>
       </div>
     </div>

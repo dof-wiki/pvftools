@@ -26,6 +26,13 @@ const (
 	LabelBoosterSelectionNum   = "booster selection num"
 	LabelBoosterCategoryName   = "booster category name"
 
+	// breath
+	Label3ChoroEnchant = "3choro enchant"
+	LabelProbability   = "probability"
+	LabelCheck         = "check"
+	LabelSkill         = "skill"
+	LabelSkillExplain  = "skill explain"
+
 	// etc
 	LabelBasisOfRarityDicision = "basis of rarity dicision"
 	LabelWorldDrop             = "world drop"

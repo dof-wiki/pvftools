@@ -3,6 +3,7 @@
 import {data_loader} from '../models';
 import {script} from '../models';
 import {box} from '../models';
+import {proto} from '../models';
 import {model} from '../models';
 import {api} from '../models';
 import {setting} from '../models';
@@ -21,6 +22,8 @@ export function ExportFiles(arg1:Array<string>):Promise<void>;
 export function GenBox(arg1:box.BoxParams):Promise<string>;
 
 export function GenRandomBox(arg1:box.BoxParams):Promise<string>;
+
+export function GetBreathData(arg1:number):Promise<proto.BreathData>;
 
 export function GetClearRewardDrop():Promise<Array<number>>;
 
@@ -48,11 +51,19 @@ export function LoadData(arg1:Array<string>):Promise<void>;
 
 export function QueryEquipments(arg1:api.EquQueryCond):Promise<Array<model.Equipment>>;
 
+export function ReloadBreath(arg1:number):Promise<proto.BreathData>;
+
+export function SaveBreath(arg1:number):Promise<void>;
+
 export function SaveFile(arg1:string,arg2:string):Promise<void>;
 
 export function SaveWorldDropData():Promise<void>;
 
 export function SearchByName(arg1:string):Promise<Array<api.SearchResult>>;
+
+export function SetBreathBaseData(arg1:number,arg2:number,arg3:number):Promise<void>;
+
+export function SetBreathSkills(arg1:number,arg2:number,arg3:number,arg4:string,arg5:Array<proto.BreathCheckSkillItem>):Promise<void>;
 
 export function SetClearRewardDrop(arg1:Array<number>):Promise<void>;
 

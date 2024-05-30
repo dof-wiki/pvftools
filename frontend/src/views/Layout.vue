@@ -36,6 +36,11 @@ const menuItems = [
     icon: CopyOutline,
     to: '/batch',
   },
+  {
+    name: '异次元气息',
+    icon: CopyOutline,
+    to: '/breath',
+  },
 ]
 
 const menuOptions: MenuOption[] = menuItems.map((item) => {

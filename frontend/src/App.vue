@@ -6,9 +6,11 @@ import Layout from "./views/Layout.vue";
 <template>
   <n-config-provider :theme="darkTheme">
     <n-message-provider>
-      <n-modal-provider>
-        <Layout></Layout>
-      </n-modal-provider>
+      <n-dialog-provider>
+        <n-modal-provider>
+          <Layout></Layout>
+        </n-modal-provider>
+      </n-dialog-provider>
     </n-message-provider>
   </n-config-provider>
 </template>

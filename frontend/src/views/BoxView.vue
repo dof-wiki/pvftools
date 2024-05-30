@@ -7,6 +7,7 @@ import {GenBox, SaveFile} from "../../wailsjs/go/api/App";
 import BoxParams = box.BoxParams;
 import RarityRadio from "../components/RarityRadio.vue";
 import InputModal from "../components/InputModal.vue";
+import ItemSelector from "../components/ItemSelector.vue";
 
 const formData = reactive({
   box_type: 0,
@@ -261,6 +262,7 @@ onMounted(() => {
       <n-form>
         <n-form-item label="物品">
           <n-input-number v-model:value="addItemForm.id" :show-button="false"></n-input-number>
+          <item-selector v-model:value="addItemForm.id"></item-selector>
         </n-form-item>
         <n-form-item label="数量">
           <n-input-number v-model:value="addItemForm.count" :min="1"></n-input-number>

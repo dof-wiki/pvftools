@@ -30,6 +30,10 @@ export function GenRandomBox(arg1) {
   return window['go']['api']['App']['GenRandomBox'](arg1);
 }
 
+export function GetBreathData(arg1) {
+  return window['go']['api']['App']['GetBreathData'](arg1);
+}
+
 export function GetClearRewardDrop() {
   return window['go']['api']['App']['GetClearRewardDrop']();
 }
@@ -82,6 +86,14 @@ export function QueryEquipments(arg1) {
   return window['go']['api']['App']['QueryEquipments'](arg1);
 }
 
+export function ReloadBreath(arg1) {
+  return window['go']['api']['App']['ReloadBreath'](arg1);
+}
+
+export function SaveBreath(arg1) {
+  return window['go']['api']['App']['SaveBreath'](arg1);
+}
+
 export function SaveFile(arg1, arg2) {
   return window['go']['api']['App']['SaveFile'](arg1, arg2);
 }
@@ -92,6 +104,14 @@ export function SaveWorldDropData() {
 
 export function SearchByName(arg1) {
   return window['go']['api']['App']['SearchByName'](arg1);
+}
+
+export function SetBreathBaseData(arg1, arg2, arg3) {
+  return window['go']['api']['App']['SetBreathBaseData'](arg1, arg2, arg3);
+}
+
+export function SetBreathSkills(arg1, arg2, arg3, arg4, arg5) {
+  return window['go']['api']['App']['SetBreathSkills'](arg1, arg2, arg3, arg4, arg5);
 }
 
 export function SetClearRewardDrop(arg1) {

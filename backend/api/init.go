@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"github.com/dof-wiki/godof/parser"
+	"github.com/dof-wiki/godof/parser/tree_parser"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"pvftools/backend/common/ctx"
 	"pvftools/backend/internal/data_source"
@@ -16,6 +17,7 @@ type App struct {
 	cacheMu     sync.RWMutex
 	parserCache map[string]*parser.Parser
 	lstParser   map[string]*parser.LstParser
+	treeParser  map[string]*tree_parser.TreeParser
 }
 
 // NewApp creates a new App application struct
@@ -23,6 +25,7 @@ func NewApp() *App {
 	return &App{
 		parserCache: make(map[string]*parser.Parser),
 		lstParser:   make(map[string]*parser.LstParser),
+		treeParser:  make(map[string]*tree_parser.TreeParser),
 	}
 }
 
@@ -69,4 +72,30 @@ func (a *App) saveData(path string) error {
 	a.cacheMu.Lock()
 	defer a.cacheMu.Unlock()
 	return data_source.GetDataSource().SaveFileContent(path, a.getParserInner(path).Render())
+}
+
+func (a *App) getTreeParserInner(path string) *tree_parser.TreeParser {
+	if _, ok := a.treeParser[path]; !ok {
+		c, err := data_source.GetDataSource().GetFileContent(path)
+		if err != nil {
+			runtime.LogError(a.ctx, err.Error())
+			return tree_parser.NewTreeParser("")
+		}
+		a.treeParser[path] = tree_parser.NewTreeParser(c)
+	}
+	return a.treeParser[path]
+}
+
+func (a *App) getTreeParser(path string) *tree_parser.TreeParser {
+	a.cacheMu.RLock()
+	defer a.cacheMu.RUnlock()
+	return a.getTreeParserInner(path)
+}
+
+func (a *App) delTreeParser(path string) {
+	a.cacheMu.RLock()
+	defer a.cacheMu.RUnlock()
+	if _, ok := a.treeParser[path]; ok {
+		delete(a.treeParser, path)
+	}
 }
