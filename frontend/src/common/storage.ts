@@ -19,7 +19,7 @@ class Storage {
     }
     this.loading.skill = true
     try {
-      const skills = await GetJobSkill(0)
+      const skills = await GetJobSkill(-1)
       skills.forEach((skl) => {
         if (!this._skillMap.has(skl.job)) {
           this._skillMap.set(skl.job, new Map())

@@ -27,6 +27,7 @@ func NewBreathEditor(id int, p *tree_parser.TreeParser) *BreathEditor {
 func (b *BreathEditor) parse() {
 	root := b.p.GetRoot()
 	b.Data.Name = root.GetFirstChild(consts.LabelName).Value.GetString()
+
 	enchant := root.GetFirstChild(consts.Label3ChoroEnchant)
 	probabilities := enchant.GetFirstChild(consts.LabelProbability).Value.GetInts()
 	b.Data.Probability1 = probabilities[0]

@@ -13,8 +13,7 @@ var breathPath = map[int]string{
 	1254: consts.PathBreathRed,
 	1255: consts.PathBreathBlue,
 	1256: consts.PathBreathGreen,
-	//1257: consts.PathBreathYellow,
-	1257: "2.stk",
+	1257: consts.PathBreathYellow,
 }
 
 var breathEditor = make(map[int]*breath.BreathEditor)
