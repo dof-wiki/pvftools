@@ -4,6 +4,7 @@ import {MenuOption, NIcon, useMessage} from "naive-ui";
 import {h, onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
 import {EventsOn} from "../../wailsjs/runtime";
+import storage from "../common/storage";
 
 const menuItems = [
   {
@@ -86,6 +87,8 @@ onMounted(() => {
   EventsOn('error', async (msg: string) => {
     message.error(msg)
   })
+
+  storage.loadJobMap()
 })
 </script>
 

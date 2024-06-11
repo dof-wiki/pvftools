@@ -4,13 +4,12 @@ import Skill = model.Skill;
 import {computed, onMounted, ref} from "vue";
 import {DataTableColumns, useMessage} from "naive-ui";
 import {GetJobInfo, GetJobSkill} from "../../wailsjs/go/api/App";
-import Job = model.Job;
 
 const message = useMessage()
 
 const props = withDefaults(defineProps<{
-  onSelect: (skill: Skill) => Promise<void>,
-  multiSelect: boolean,
+  onSelect?: (skill: Skill) => Promise<void>,
+  multiSelect?: boolean,
 }>(), {
   multiSelect: false,
 })
@@ -96,7 +95,9 @@ const filteredSkills = computed(() => {
 const rowProps = (row: Skill) => {
   return {
     onClick: async () => {
-      await props.onSelect(row)
+      if (props.onSelect) {
+        await props.onSelect(row)
+      }
     }
   }
 }

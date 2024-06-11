@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import {computed, reactive, ref} from "vue";
+import {computed, onMounted, reactive, ref} from "vue";
 import {useMessage} from 'naive-ui'
 import * as equAttrDict from "../resources/equ_attr.json"
 import {Trash, Save} from '@vicons/ionicons5'
-import {model} from "../../wailsjs/go/models";
+import {model, proto} from "../../wailsjs/go/models";
 import Skill = model.Skill;
+import storage from "../common/storage";
+import SkillList from "../components/SkillList.vue";
+import SkillIncrementList from "../components/SkillIncrementList.vue";
+import SkillIncrement = proto.SkillIncrement;
 
 type ChoiceItem = {
   label: string
@@ -37,14 +41,25 @@ const cateOptions = [
   {name: '抗性属性', value: 'resistance'},
   {name: '速度属性', value: 'speed'},
   {name: '武器元素属性', value: 'elemental_weapon'},
+  {name: '技能', value: 'skill'},
   {name: '触发条件', value: 'trigger'},
   {name: '触发效果', value: 'then'},
 ]
 
+const specialAttrs: Record<string, TAttr[]> = {
+  skill: [
+    {name: '技能等级', tmpl: 'level'},
+    {name: '技能数据', tmpl: 'data'},
+  ]
+}
+
 const filterText = ref('')
 
 const attrOptions = computed<Array<TAttr>>(() => {
-  const list = (equAttrDict as any)[cate.value] as Array<TAttr>
+  let list = specialAttrs[cate.value]
+  if (!list) {
+    list = (equAttrDict as any)[cate.value] as Array<TAttr>
+  }
   if (!filterText.value) {
     return list
   }
@@ -59,18 +74,48 @@ const attrCtx = reactive({
   values: [] as Array<any>,
 })
 
+const skillLevelCtx = reactive({
+  showSelector: false,
+  skills: [] as Skill[],
+  level: 1,
+})
+
+const skillDataCtx = reactive({
+  show: false,
+  data: [] as Array<SkillIncrement>,
+})
+
 const addAttr = (name: string) => {
   const attr = attrOptions.value.find((item: any) => item.name == name)
   if (!attr) {
     return
   }
-  attrCtx.attrTmpl = attr
-  attrCtx.values = (attr.tmpl.match(/{\d+}/g) || []).map((v: any) => null)
-  if (attrCtx.values.length === 0) {
-    confirmAddAttr()
-  } else {
-    attrCtx.show = true
+  switch (attr.tmpl) {
+    case 'level':
+      skillLevelCtx.level = 1
+      skillLevelCtx.showSelector = true
+      break
+    case 'data':
+      skillDataCtx.data = []
+      skillDataCtx.show = true
+      break
+    default:
+      attrCtx.attrTmpl = attr
+      attrCtx.values = (attr.tmpl.match(/{\d+}/g) || []).map((v: any) => null)
+      if (attrCtx.values.length === 0) {
+        confirmAddAttr()
+      } else {
+        attrCtx.show = true
+      }
   }
+}
+
+const onSelectSkills = (skls: Skill[]) => {
+  skillLevelCtx.skills = skls
+}
+
+const onSkillIncrUpdate = async (newData: Array<SkillIncrement>) => {
+  skillDataCtx.data = newData
 }
 
 const confirmAddAttr = () => {
@@ -105,6 +150,45 @@ const confirmAddAttr = () => {
     attrs.value.push(attr)
   }
   attrCtx.show = false
+}
+
+const confirmAddSkillLevel = () => {
+  if (skillLevelCtx.level <= 0 || skillLevelCtx.skills.length === 0) {
+    return
+  }
+  const rows = skillLevelCtx.skills.map((skl) => {
+    const job = `[${storage.getJobStr(skl.job)}]`
+    return `\`${job}\`\t${skl.code}\t${skillLevelCtx.level}`
+  })
+  const item = attrs.value.find((v) => v.name === '技能等级')
+  if (item) {
+    item.content = item.content.replace('[/skill levelup]', '\t' + rows.join('\n\t') + '\n[/skill levelup]')
+  } else {
+    attrs.value.push({
+      name: '技能等级',
+      content: '[skill levelup]\n\t' + rows.join('\n\t') + '\n[/skill levelup]'
+    })
+  }
+  skillLevelCtx.showSelector = false
+}
+
+const confirmAddSkillData = () => {
+  skillDataCtx.show = false
+  if (skillDataCtx.data.length === 0) {
+    return
+  }
+  const rows = skillDataCtx.data.map((item: SkillIncrement) => {
+    return `\`${item.job}\`\t${item.skill_id}\t\`${item.type}\`\t\`${item.data_type}\`\t${item.data_index}\t\`${item.increment_type}\`\t${item.value}`
+  })
+  const item = attrs.value.find((v) => v.name === '技能数据')
+  if (item) {
+    item.content = item.content.replace('[/skill data up]', '\t' + rows.join('\n\t') + '\n[/skill data up]')
+  } else {
+    attrs.value.push({
+      name: '技能数据',
+      content: '[skill data up]\n\t' + rows.join('\n\t') + '\n[/skill data up]'
+    })
+  }
 }
 
 const getDescList = (attr: TAttr) => {
@@ -259,6 +343,37 @@ const deleteTrigger = () => {
           <n-flex justify="end">
             <n-button @click="attrCtx.show = false">取消</n-button>
             <n-button type="primary" @click="confirmAddAttr">确定</n-button>
+          </n-flex>
+        </template>
+      </n-card>
+    </n-modal>
+
+    <n-drawer v-model:show="skillLevelCtx.showSelector" :width="300">
+      <n-form label-placement="left" class="mt-2 ml-2">
+        <n-flex justify="end" class="mb-2">
+          <n-button type="primary" @click="confirmAddSkillLevel">确定</n-button>
+        </n-flex>
+        <n-form-item label="等级">
+          <n-input-number v-model:value="skillLevelCtx.level" :min="1"></n-input-number>
+        </n-form-item>
+        <n-form-item>
+          <skill-list class="h-[85vh]" multi-select @multi-select="onSelectSkills"></skill-list>
+        </n-form-item>
+      </n-form>
+    </n-drawer>
+
+    <n-modal v-model:show="skillDataCtx.show">
+      <n-card style="width: 50%">
+        <template #header>
+          <span>技能数据</span>
+        </template>
+        <skill-increment-list
+            :data="skillDataCtx.data"
+            @update="onSkillIncrUpdate"
+        ></skill-increment-list>
+        <template #footer>
+          <n-flex justify="end">
+            <n-button type="primary" @click="confirmAddSkillData">确定</n-button>
           </n-flex>
         </template>
       </n-card>
