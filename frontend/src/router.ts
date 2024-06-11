@@ -6,6 +6,7 @@ import BatchHandleView from "./views/BatchHandleView.vue";
 import SkillView from "./views/SkillView.vue";
 import BoxView from "./views/BoxView.vue";
 import BreathView from "./views/BreathView.vue";
+import EquAttrView from "./views/EquAttrView.vue";
 
 const routes: RouteRecordRaw[] = [
     { path: '/', component: IndexView },
@@ -15,6 +16,7 @@ const routes: RouteRecordRaw[] = [
     { path: '/skill', component: SkillView },
     { path: '/box', component: BoxView },
     { path: '/breath', component: BreathView },
+    { path: '/equ_attr', component: EquAttrView },
 ]
 
 const router = createRouter({

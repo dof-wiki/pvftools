@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {CopyOutline, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline} from "@vicons/ionicons5";
+import {CopyOutline, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline, Aperture, Shirt} from "@vicons/ionicons5";
 import {MenuOption, NIcon, useMessage} from "naive-ui";
 import {h, onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
@@ -38,9 +38,14 @@ const menuItems = [
   },
   {
     name: '异次元气息',
-    icon: CopyOutline,
+    icon: Aperture,
     to: '/breath',
   },
+  {
+    name: '装备属性生成',
+    icon: Shirt,
+    to: '/equ_attr',
+  }
 ]
 
 const menuOptions: MenuOption[] = menuItems.map((item) => {
@@ -58,6 +63,8 @@ type ProgressController = {
 }
 
 const progressList = ref<ProgressController[]>([])
+
+const collapsed = ref(false)
 
 const message = useMessage()
 
@@ -87,8 +94,20 @@ onMounted(() => {
     <n-layout-sider
         :width="200"
         bordered
+        collapse-mode="width"
+        :collapsed-width="64"
+        :collapsed="collapsed"
+        @collapse="collapsed = true"
+        @expand="collapsed = false"
+        show-trigger
     >
-      <n-menu :options="menuOptions" default-value="/"></n-menu>
+      <n-menu
+          :options="menuOptions"
+          :collapsed="collapsed"
+          :collapsed-width="64"
+          :collapsed-icon-size="22"
+          default-value="/"
+      ></n-menu>
       <div class="p-4" v-if="progressList.length > 0">
         <div class="font-bold text-yellow-500">数据加载进度</div>
         <div v-for="item in progressList" :key="item.name" class="flex items-center">
