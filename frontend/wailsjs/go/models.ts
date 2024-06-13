@@ -211,6 +211,26 @@ export namespace data_loader {
 
 export namespace model {
 	
+	export class CustomAttrTmpl {
+	    id: number;
+	    name: string;
+	    tmpl: string;
+	    desc: string;
+	    choices: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new CustomAttrTmpl(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
+	        this.name = source["name"];
+	        this.tmpl = source["tmpl"];
+	        this.desc = source["desc"];
+	        this.choices = source["choices"];
+	    }
+	}
 	export class Equipment {
 	    code: number;
 	    name: string;

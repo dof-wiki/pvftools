@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, onMounted, reactive, ref} from "vue";
-import {useMessage} from 'naive-ui'
+import {useDialog, useMessage} from 'naive-ui'
 import * as equAttrDict from "../resources/equ_attr.json"
 import {Trash, Save} from '@vicons/ionicons5'
 import {model, proto} from "../../wailsjs/go/models";
@@ -9,6 +9,13 @@ import storage from "../common/storage";
 import SkillList from "../components/SkillList.vue";
 import SkillIncrementList from "../components/SkillIncrementList.vue";
 import SkillIncrement = proto.SkillIncrement;
+import {
+  AddCustomAttrTmpl,
+  DeleteCustomAttrTmpl,
+  GetCustomAttrTmpls,
+  UpdateCustomAttrTmpl
+} from "../../wailsjs/go/api/App";
+import CustomAttrTmpl = model.CustomAttrTmpl;
 
 type ChoiceItem = {
   label: string
@@ -23,6 +30,7 @@ type TAttr = {
   desc?: string[]
   choices?: Array<string | null>
   inner_selector?: Array<TInnerSelector>
+  id?: number
 }
 
 type AttrItem = {
@@ -44,6 +52,7 @@ const cateOptions = [
   {name: '技能', value: 'skill'},
   {name: '触发条件', value: 'trigger'},
   {name: '触发效果', value: 'then'},
+  {name: '自定义模板', value: 'custom'},
 ]
 
 const specialAttrs: Record<string, TAttr[]> = {
@@ -53,12 +62,19 @@ const specialAttrs: Record<string, TAttr[]> = {
   ]
 }
 
+const customAttrs = ref<Array<TAttr>>([])
+
 const filterText = ref('')
 
 const attrOptions = computed<Array<TAttr>>(() => {
-  let list = specialAttrs[cate.value]
-  if (!list) {
-    list = (equAttrDict as any)[cate.value] as Array<TAttr>
+  let list: Array<TAttr> = []
+  if (cate.value === 'custom') {
+    list = customAttrs.value
+  } else {
+    list = specialAttrs[cate.value]
+    if (!list) {
+      list = (equAttrDict as any)[cate.value] as Array<TAttr>
+    }
   }
   if (!filterText.value) {
     return list
@@ -85,8 +101,22 @@ const skillDataCtx = reactive({
   data: [] as Array<SkillIncrement>,
 })
 
-const addAttr = (name: string) => {
-  const attr = attrOptions.value.find((item: any) => item.name == name)
+const addAttr = (item: TAttr) => {
+  if (cate.value === 'custom') {
+    customAttrOperationCtx.item = item
+    customAttrOperationCtx.show = true
+  } else {
+    innerAddAttr(item)
+  }
+}
+
+const innerAddAttr = (item: TAttr) => {
+  const attr = attrOptions.value.find((it: any) => {
+    if (item.id) {
+      return it.id === item.id
+    }
+    return it.name === item.name
+  })
   if (!attr) {
     return
   }
@@ -264,6 +294,136 @@ const deleteTrigger = () => {
   cate.value = 'base'
   triggerCtx.inTrigger = false
 }
+
+const customAttrTmplCtx = reactive({
+  show: false,
+  formData: {
+    name: '',
+    tmpl: '',
+    desc: [] as Array<string>,
+    choices: [] as Array<string | null>,
+  },
+  editId: 0,
+})
+
+const addCustomAttrTmpl = () => {
+  customAttrTmplCtx.formData = {
+    name: '',
+    tmpl: '',
+    desc: [] as Array<string>,
+    choices: [] as Array<string | null>,
+  }
+  customAttrTmplCtx.editId = 0
+  customAttrTmplCtx.show = true
+}
+
+const addCustomAttrTmplValue = () => {
+  customAttrTmplCtx.formData.choices.push(null)
+  const idx = customAttrTmplCtx.formData.desc.length
+  customAttrTmplCtx.formData.desc.push(`数值${idx}`)
+  customAttrTmplCtx.formData.tmpl += `{${idx}}`
+}
+
+const rmCustomAttrTmplValue = () => {
+  if (customAttrTmplCtx.formData.choices.length < 1) {
+    return
+  }
+  customAttrTmplCtx.formData.choices.pop()
+  customAttrTmplCtx.formData.desc.pop()
+  const idx = customAttrTmplCtx.formData.desc.length
+  customAttrTmplCtx.formData.tmpl = customAttrTmplCtx.formData.tmpl.replace(`{${idx}}`, '')
+}
+
+const confirmAddCustomTmpl = async () => {
+  const tmpl = new CustomAttrTmpl({
+    name: customAttrTmplCtx.formData.name,
+    tmpl: customAttrTmplCtx.formData.tmpl,
+    desc: JSON.stringify(customAttrTmplCtx.formData.desc),
+    choices: JSON.stringify(customAttrTmplCtx.formData.choices),
+    id: customAttrTmplCtx.editId || undefined,
+  })
+  if (customAttrTmplCtx.editId) {
+    await UpdateCustomAttrTmpl(tmpl)
+  } else {
+    await AddCustomAttrTmpl(tmpl)
+  }
+  await fetchCustomAttrTmpl()
+  customAttrTmplCtx.show = false
+}
+
+const tmplSelectors = computed(() => {
+  return Object.keys(equAttrDict.choices as Record<string, any>).map((key) => {
+    return {
+      value: key,
+      label: key
+    }
+  })
+})
+
+const fetchCustomAttrTmpl = async () => {
+  const tmpls = await GetCustomAttrTmpls()
+  customAttrs.value = tmpls.map((item: CustomAttrTmpl) => {
+    return {
+      id: item.id,
+      name: item.name,
+      tmpl: item.tmpl,
+      desc: JSON.parse(item.desc),
+      choices: JSON.parse(item.choices),
+    }
+  })
+}
+
+const handleTab = (e: KeyboardEvent) => {
+  e.preventDefault()
+  const el = e.target as HTMLTextAreaElement
+  const start = el.selectionStart
+  const end = el.selectionEnd
+  const value = el.value
+  el.value = value.substring(0, start) + '\t' + value.substring(end)
+  el.selectionStart = el.selectionEnd = start + 1
+}
+
+const customAttrOperationCtx = reactive({
+  show: false,
+  item: null as TAttr | null,
+})
+
+const dialog = useDialog()
+
+const handleCustomAttrSelect = (key: string) => {
+  const item = customAttrOperationCtx.item!
+  customAttrOperationCtx.show = false
+  switch (key) {
+    case 'insert':
+      innerAddAttr(item)
+      break
+    case 'edit':
+      customAttrTmplCtx.formData = {
+        name: item.name,
+        tmpl: item.tmpl,
+        desc: item.desc,
+        choices: item.choices,
+      }
+      customAttrTmplCtx.editId = item.id
+      customAttrTmplCtx.show = true
+      break
+    case 'delete':
+      dialog.warning({
+        title: '提示',
+        content: `确认删除模板<${item.name}>?`,
+        positiveText: '确认',
+        negativeText: '取消',
+        onPositiveClick(e) {
+          DeleteCustomAttrTmpl(item.id).then(() => fetchCustomAttrTmpl())
+        }
+      })
+      break
+  }
+}
+
+onMounted(async () => {
+  await fetchCustomAttrTmpl()
+})
 </script>
 
 <template>
@@ -281,9 +441,12 @@ const deleteTrigger = () => {
     <div class="border-r border-gray-800">
       <n-list clickable hoverable class="h-full overflow-auto">
         <n-list-item>
-          <n-input v-model:value="filterText" size="small" clearable placeholder="搜索..."></n-input>
+          <n-input-group>
+            <n-input v-model:value="filterText" size="small" clearable placeholder="搜索..."></n-input>
+            <n-button v-if="cate === 'custom'" @click="addCustomAttrTmpl">+</n-button>
+          </n-input-group>
         </n-list-item>
-        <n-list-item v-for="item in attrOptions" :key="item.name" @click="addAttr(item.name)">
+        <n-list-item v-for="item in attrOptions" :key="item.name" @click="addAttr(item)">
           {{ item.name }}
         </n-list-item>
       </n-list>
@@ -304,7 +467,7 @@ const deleteTrigger = () => {
             </n-icon>
           </n-button>
         </template>
-        <n-input type="textarea" v-model:value="item.content"></n-input>
+        <n-input type="textarea" v-model:value="item.content" @keydown.tab="handleTab"></n-input>
       </n-card>
       <n-card v-if="triggerCtx.inTrigger">
         <template #header>
@@ -376,6 +539,68 @@ const deleteTrigger = () => {
             <n-button type="primary" @click="confirmAddSkillData">确定</n-button>
           </n-flex>
         </template>
+      </n-card>
+    </n-modal>
+
+    <n-modal v-model:show="customAttrTmplCtx.show">
+      <n-card style="width: 50%">
+        <template #header>
+          <span>增加模板</span>
+        </template>
+        <n-form>
+          <n-form-item label="模板名">
+            <n-input v-model:value="customAttrTmplCtx.formData.name"></n-input>
+          </n-form-item>
+          <n-form-item label="模板">
+            <n-input
+                v-model:value="customAttrTmplCtx.formData.tmpl"
+                type="textarea"
+                :rows="5"
+                class="input-with-tab"
+                @keydown.tab="handleTab"
+            ></n-input>
+          </n-form-item>
+          <n-form-item label="模板变量">
+            <div>
+              <n-button-group size="small" class="mb-5">
+                <n-button @click="addCustomAttrTmplValue">+</n-button>
+                <n-button @click="rmCustomAttrTmplValue">-</n-button>
+              </n-button-group>
+              <n-form-item v-for="(item, idx) in customAttrTmplCtx.formData.desc" :label="`变量${idx}`">
+                <n-form-item label="描述">
+                  <n-input v-model:value="customAttrTmplCtx.formData.desc[idx]"></n-input>
+                </n-form-item>
+                <n-form-item label="选项(可选)">
+                  <n-select
+                      class="ml-2"
+                      style="width: 150px;"
+                      :options="tmplSelectors"
+                      v-model:value="customAttrTmplCtx.formData.choices[idx]"
+                      clearable
+                  ></n-select>
+                </n-form-item>
+              </n-form-item>
+            </div>
+          </n-form-item>
+        </n-form>
+        <template #footer>
+          <n-flex justify="end">
+            <n-button @click="customAttrTmplCtx.show = false">取消</n-button>
+            <n-button @click="confirmAddCustomTmpl" type="primary">保存</n-button>
+          </n-flex>
+        </template>
+      </n-card>
+    </n-modal>
+    <n-modal v-model:show="customAttrOperationCtx.show">
+      <n-card style="width: 15%;">
+        <template #header>
+          <span>{{ customAttrOperationCtx.item?.name }}</span>
+        </template>
+        <n-list hoverable clickable>
+          <n-list-item class="text-center" @click="handleCustomAttrSelect('insert')">插入</n-list-item>
+          <n-list-item class="text-center" @click="handleCustomAttrSelect('edit')">编辑</n-list-item>
+          <n-list-item class="text-center" @click="handleCustomAttrSelect('delete')">删除</n-list-item>
+        </n-list>
       </n-card>
     </n-modal>
   </div>
