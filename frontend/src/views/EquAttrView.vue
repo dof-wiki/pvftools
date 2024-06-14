@@ -401,10 +401,10 @@ const handleCustomAttrSelect = (key: string) => {
       customAttrTmplCtx.formData = {
         name: item.name,
         tmpl: item.tmpl,
-        desc: item.desc,
-        choices: item.choices,
+        desc: item.desc || [],
+        choices: item.choices || [],
       }
-      customAttrTmplCtx.editId = item.id
+      customAttrTmplCtx.editId = item.id!
       customAttrTmplCtx.show = true
       break
     case 'delete':
@@ -414,7 +414,7 @@ const handleCustomAttrSelect = (key: string) => {
         positiveText: '确认',
         negativeText: '取消',
         onPositiveClick(e) {
-          DeleteCustomAttrTmpl(item.id).then(() => fetchCustomAttrTmpl())
+          DeleteCustomAttrTmpl(item.id!).then(() => fetchCustomAttrTmpl())
         }
       })
       break

@@ -88,6 +88,14 @@ onMounted(() => {
     message.error(msg)
   })
 
+  EventsOn('job-update', async () => {
+    await storage.loadJobMap()
+  })
+
+  EventsOn('skill-update', async () => {
+    await storage.loadSkillMap()
+  })
+
   storage.loadJobMap()
 })
 </script>

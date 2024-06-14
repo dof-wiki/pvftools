@@ -4,6 +4,7 @@ import (
 	"github.com/dof-wiki/godof/parser"
 	"pvftools/backend/common"
 	"pvftools/backend/common/consts"
+	"pvftools/backend/common/ctx"
 	"pvftools/backend/common/log"
 	"pvftools/backend/common/setting"
 	"pvftools/backend/common/utils"
@@ -126,6 +127,7 @@ func (l *SkillDataLoader) run() {
 					log.LogError("save skill err %v", err)
 				}
 			}
+			ctx.Emit(consts.EventSkillUpdate)
 			l.pc.End()
 			return
 		}

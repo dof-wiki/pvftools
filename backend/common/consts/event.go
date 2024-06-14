@@ -5,4 +5,7 @@ const (
 	EventProgressUpdate = "progress-update"
 	EventProgressEnd    = "progress-end"
 	EventError          = "error"
+
+	EventJobUpdate   = "job-update"
+	EventSkillUpdate = "skill-update"
 )
