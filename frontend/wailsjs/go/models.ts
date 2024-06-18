@@ -436,6 +436,28 @@ export namespace proto {
 		    return a;
 		}
 	}
+	export class UpgradeItem {
+	    level: number;
+	    fail_rate: number;
+	    fail_op: number;
+	    fail_op_value: number;
+	    cost_id: number;
+	    cost_count: number;
+	
+	    static createFrom(source: any = {}) {
+	        return new UpgradeItem(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.level = source["level"];
+	        this.fail_rate = source["fail_rate"];
+	        this.fail_op = source["fail_op"];
+	        this.fail_op_value = source["fail_op_value"];
+	        this.cost_id = source["cost_id"];
+	        this.cost_count = source["cost_count"];
+	    }
+	}
 
 }
 

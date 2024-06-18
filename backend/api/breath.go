@@ -13,8 +13,7 @@ var breathPath = map[int]string{
 	1254: consts.PathBreathRed,
 	1255: consts.PathBreathBlue,
 	1256: consts.PathBreathGreen,
-	//1257: consts.PathBreathYellow,
-	1257: "2.stk",
+	1257: consts.PathBreathYellow,
 }
 
 var breathEditor = make(map[int]*breath.BreathEditor)
@@ -49,7 +48,6 @@ func (a *App) SetBreathSkills(id, job, subJob int, equType string, skillList []*
 
 func (a *App) SaveBreath(id int) error {
 	editor := a.getBreathEditor(id)
-	editor.Render()
 	if p, ok := breathPath[id]; ok {
 		//p = "2.stk"
 		if err := data_source.GetDataSource().SaveFileContent(p, editor.Render()); err != nil {

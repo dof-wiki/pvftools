@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {CopyOutline, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline, Aperture, Shirt} from "@vicons/ionicons5";
+import {CopyOutline, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline, Aperture, Shirt, ArrowUp} from "@vicons/ionicons5";
 import {MenuOption, NIcon, useMessage} from "naive-ui";
 import {h, onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
@@ -46,7 +46,12 @@ const menuItems = [
     name: '装备属性生成',
     icon: Shirt,
     to: '/equ_attr',
-  }
+  },
+  {
+    name: '强化/增幅',
+    icon: ArrowUp,
+    to: '/upgrade',
+  },
 ]
 
 const menuOptions: MenuOption[] = menuItems.map((item) => {

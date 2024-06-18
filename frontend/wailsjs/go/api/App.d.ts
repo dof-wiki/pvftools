@@ -49,6 +49,8 @@ export function GetMonsterDrop():Promise<Array<any>>;
 
 export function GetSkillDetail(arg1:number):Promise<api.SkillData>;
 
+export function GetUpgradeData(arg1:number):Promise<Array<proto.UpgradeItem>>;
+
 export function GetUserSettings():Promise<setting.SettingStruct>;
 
 export function GetWorldDropData(arg1:number):Promise<Array<world_drop.WorldDropItem>>;
@@ -62,6 +64,8 @@ export function ReloadBreath(arg1:number):Promise<proto.BreathData>;
 export function SaveBreath(arg1:number):Promise<void>;
 
 export function SaveFile(arg1:string,arg2:string):Promise<void>;
+
+export function SaveUpgradeData(arg1:number):Promise<void>;
 
 export function SaveWorldDropData():Promise<void>;
 
@@ -80,6 +84,8 @@ export function SetMonsterDrop(arg1:Array<any>):Promise<void>;
 export function SetMonsterExtraDrop(arg1:Array<any>):Promise<void>;
 
 export function SetSkillData(arg1:number,arg2:Array<number>,arg3:Array<any>,arg4:boolean):Promise<void>;
+
+export function SetUpgradeItem(arg1:number,arg2:Array<proto.UpgradeItem>):Promise<void>;
 
 export function SetUserSettings(arg1:setting.SettingStruct):Promise<void>;
 

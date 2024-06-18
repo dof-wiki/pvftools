@@ -288,11 +288,15 @@ const saveTrigger = () => {
   })
   cate.value = 'base'
   triggerCtx.inTrigger = false
+  triggerCtx.trigger = []
+  triggerCtx.then = []
 }
 
 const deleteTrigger = () => {
   cate.value = 'base'
   triggerCtx.inTrigger = false
+  triggerCtx.trigger = []
+  triggerCtx.then = []
 }
 
 const customAttrTmplCtx = reactive({
@@ -467,7 +471,7 @@ onMounted(async () => {
             </n-icon>
           </n-button>
         </template>
-        <n-input type="textarea" v-model:value="item.content" @keydown.tab="handleTab"></n-input>
+        <n-input type="textarea" autosize v-model:value="item.content" @keydown.tab="handleTab"></n-input>
       </n-card>
       <n-card v-if="triggerCtx.inTrigger">
         <template #header>
@@ -483,7 +487,7 @@ onMounted(async () => {
             </n-button>
           </n-flex>
         </template>
-        <n-input type="textarea" :rows="10" :value="triggerContent" disabled></n-input>
+        <n-input type="textarea" autosize :rows="10" :value="triggerContent" disabled></n-input>
       </n-card>
     </div>
     <n-modal v-model:show="attrCtx.show">
@@ -555,6 +559,7 @@ onMounted(async () => {
             <n-input
                 v-model:value="customAttrTmplCtx.formData.tmpl"
                 type="textarea"
+                autosize
                 :rows="5"
                 class="input-with-tab"
                 @keydown.tab="handleTab"

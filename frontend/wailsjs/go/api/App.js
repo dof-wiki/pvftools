@@ -82,6 +82,10 @@ export function GetSkillDetail(arg1) {
   return window['go']['api']['App']['GetSkillDetail'](arg1);
 }
 
+export function GetUpgradeData(arg1) {
+  return window['go']['api']['App']['GetUpgradeData'](arg1);
+}
+
 export function GetUserSettings() {
   return window['go']['api']['App']['GetUserSettings']();
 }
@@ -108,6 +112,10 @@ export function SaveBreath(arg1) {
 
 export function SaveFile(arg1, arg2) {
   return window['go']['api']['App']['SaveFile'](arg1, arg2);
+}
+
+export function SaveUpgradeData(arg1) {
+  return window['go']['api']['App']['SaveUpgradeData'](arg1);
 }
 
 export function SaveWorldDropData() {
@@ -144,6 +152,10 @@ export function SetMonsterExtraDrop(arg1) {
 
 export function SetSkillData(arg1, arg2, arg3, arg4) {
   return window['go']['api']['App']['SetSkillData'](arg1, arg2, arg3, arg4);
+}
+
+export function SetUpgradeItem(arg1, arg2) {
+  return window['go']['api']['App']['SetUpgradeItem'](arg1, arg2);
 }
 
 export function SetUserSettings(arg1) {
