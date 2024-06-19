@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {CopyOutline, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline, Aperture, Shirt, ArrowUp} from "@vicons/ionicons5";
+import {CopyOutline, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline, Aperture, Shirt, ArrowUp, HelpOutline} from "@vicons/ionicons5";
 import {MenuOption, NIcon, useMessage} from "naive-ui";
 import {h, onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
@@ -52,6 +52,11 @@ const menuItems = [
     icon: ArrowUp,
     to: '/upgrade',
   },
+  {
+    name: '任务生成器',
+    icon: HelpOutline,
+    to: '/quest',
+  }
 ]
 
 const menuOptions: MenuOption[] = menuItems.map((item) => {
