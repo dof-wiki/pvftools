@@ -6,6 +6,8 @@ const (
 	LstPathEquipment = "equipment/equipment.lst"
 	LstPathSkill     = "skill/skilllist.lst"
 	LstPathStackable = "stackable/stackable.lst"
+	LstPathNpc       = "npc/npc.lst"
+	LstPathDgn       = "dungeon/dungeon.lst"
 )
 
 const (

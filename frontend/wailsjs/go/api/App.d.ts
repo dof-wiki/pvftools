@@ -69,7 +69,7 @@ export function SaveUpgradeData(arg1:number):Promise<void>;
 
 export function SaveWorldDropData():Promise<void>;
 
-export function SearchByName(arg1:string):Promise<Array<api.SearchResult>>;
+export function SearchByName(arg1:string,arg2:number):Promise<Array<api.SearchResult>>;
 
 export function SetBreathBaseData(arg1:number,arg2:number,arg3:number):Promise<void>;
 

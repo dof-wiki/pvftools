@@ -5,6 +5,7 @@ import {proto} from "../../wailsjs/go/models";
 import UpgradeItem = proto.UpgradeItem;
 import {GetItemsName, GetUpgradeData, SaveUpgradeData, SetUpgradeItem} from "../../wailsjs/go/api/App";
 import ItemSelector from "../components/ItemSelector.vue";
+import AnySearch from "../components/AnySearch.vue";
 
 const loaded = ref(false)
 const loading = ref(false)
@@ -140,6 +141,8 @@ const columns: DataTableColumns<UpgradeItem> = [
 const setCostCtx = reactive({
   show: false,
   costId: null as number | null,
+  showSelector: false,
+  itemIds: [] as number[],
 })
 
 const setCost = () => {
@@ -157,6 +160,10 @@ const confirmSetCost = () => {
   setCostCtx.show = false
   getItemNames()
 }
+
+const onSelectItem = (v: number) => {
+  setCostCtx.costId = v
+}
 </script>
 
 <template>
@@ -172,16 +179,25 @@ const confirmSetCost = () => {
     <n-data-table :data="items" :loading="loading" :columns="columns" max-height="80vh" class="mt-5"></n-data-table>
 
     <n-modal v-model:show="setCostCtx.show">
-      <n-card style="width: 30%">
+      <n-card style="width: 20%">
+        <template #header>
+          <span>批量设置道具</span>
+        </template>
         <n-input-group>
-          <n-input-number v-model:value="setCostCtx.costId" :min="1" :show-button="false"></n-input-number>
-          <item-selector v-model:value="setCostCtx.costId"></item-selector>
+          <n-input-number class="w-full" v-model:value="setCostCtx.costId" :min="1" :show-button="false"></n-input-number>
+          <n-button @click="setCostCtx.showSelector=true">选择</n-button>
         </n-input-group>
         <template #footer>
-          <n-button @click="confirmSetCost" type="primary">确定</n-button>
+          <div class="flex justify-end">
+            <n-button @click="confirmSetCost" type="primary">确定</n-button>
+          </div>
         </template>
       </n-card>
     </n-modal>
+
+    <n-drawer v-model:show="setCostCtx.showSelector" class="p-5" width="500">
+      <any-search :search-type="1" @select="onSelectItem"></any-search>
+    </n-drawer>
   </div>
 </template>
 

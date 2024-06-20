@@ -122,8 +122,8 @@ export function SaveWorldDropData() {
   return window['go']['api']['App']['SaveWorldDropData']();
 }
 
-export function SearchByName(arg1) {
-  return window['go']['api']['App']['SearchByName'](arg1);
+export function SearchByName(arg1, arg2) {
+  return window['go']['api']['App']['SearchByName'](arg1, arg2);
 }
 
 export function SetBreathBaseData(arg1, arg2, arg3) {

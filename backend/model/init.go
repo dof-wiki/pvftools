@@ -9,6 +9,8 @@ var models = []any{
 	new(Skill),
 	new(Stackable),
 	new(CustomAttrTmpl),
+	new(Npc),
+	new(Dungeon),
 }
 
 func init() {

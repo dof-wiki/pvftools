@@ -38,7 +38,7 @@ const loading = ref(false)
 const checkUpdate = async () => {
   loading.value = true
   try {
-    updateResult.value = await CheckDataUpdate()
+    updateResult.value = (await CheckDataUpdate()).sort((a, b) => a.key.localeCompare(b.key))
   } finally {
     loading.value = false
   }

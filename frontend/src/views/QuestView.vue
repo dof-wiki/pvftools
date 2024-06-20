@@ -6,8 +6,8 @@ import {model} from "../../wailsjs/go/models";
 import Job = model.Job;
 import storage from "../common/storage";
 import {NButton, useMessage} from "naive-ui";
-import ItemSelector from "../components/ItemSelector.vue";
 import {SaveFile} from "../../wailsjs/go/api/App";
+import AnySearch from "../components/AnySearch.vue";
 
 /*
 [monster reward item]
@@ -53,6 +53,7 @@ const typeOptions: QuestTypeOpt[] = [
     sub_type: -1,
     int_data: ['副本id', '难度', '怪物id', '数量'],
     choices: [null, DgnDifficulty, null, null],
+    comp: ['select-5'],
     repeat: true
   },
   {
@@ -68,7 +69,7 @@ const typeOptions: QuestTypeOpt[] = [
     type: '[seeking]',
     sub_type: -1,
     int_data: ['物品id', '数量'],
-    comp: ['item'],
+    comp: ['select-1'],
     repeat: true
   },
   {
@@ -76,7 +77,8 @@ const typeOptions: QuestTypeOpt[] = [
     label: '对话',
     type: '[meet npc]',
     sub_type: -1,
-    int_data: ['npc id']
+    int_data: ['npc id'],
+    comp: ['select-4'],
   },
   {
     value: 5,
@@ -84,7 +86,8 @@ const typeOptions: QuestTypeOpt[] = [
     type: '[condition under clear]',
     sub_type: 6,
     int_data: ['副本id', '难度'],
-    choices: [null, DgnDifficulty]
+    choices: [null, DgnDifficulty],
+    comp: ['select-5'],
   },
   {
     value: 6,
@@ -92,7 +95,8 @@ const typeOptions: QuestTypeOpt[] = [
     type: '[condition under clear]',
     sub_type: 11,
     int_data: ['副本id', '难度', '房间数量'],
-    choices: [null, DgnDifficulty, null]
+    choices: [null, DgnDifficulty, null],
+    comp: ['select-5'],
   },
   {
     value: 7,
@@ -100,7 +104,8 @@ const typeOptions: QuestTypeOpt[] = [
     type: '[condition under clear]',
     sub_type: 0,
     int_data: ['副本id', '难度', '时间/s'],
-    choices: [null, DgnDifficulty, null]
+    choices: [null, DgnDifficulty, null],
+    comp: ['select-5'],
   },
   {
     value: 8,
@@ -108,7 +113,8 @@ const typeOptions: QuestTypeOpt[] = [
     type: '[condition under clear]',
     sub_type: 5,
     int_data: ['副本id', '难度', '人数'],
-    choices: [null, DgnDifficulty, null]
+    choices: [null, DgnDifficulty, null],
+    comp: ['select-5'],
   },
 ]
 
@@ -118,7 +124,7 @@ const rewardTypeOptions: Array<QuestTypeOpt> = [
     label: '道具',
     type: '[item]',
     int_data: ['道具id', '数量'],
-    comp: ['item'],
+    comp: ['select-1'],
     repeat: true,
   },
   {
@@ -126,6 +132,7 @@ const rewardTypeOptions: Array<QuestTypeOpt> = [
     label: '称号',
     type: '[title]',
     int_data: ['称号id', '数量'],
+    comp: ['select-2'],
   },
   {
     value: 3,
@@ -148,7 +155,9 @@ const formData = reactive({
   name: '',
   difficulty: 'E',
   npc: 2,
+  npc_name: '赛丽亚·克鲁敏',
   complete_npc: null as number | null,
+  complete_npc_name: '',
   job: '',
   grow_type: -1,
   level: [1, 120],
@@ -157,12 +166,12 @@ const formData = reactive({
   condition_message: '',
   solve_message: '',
   tp: 1,
-  int_data: [] as number[],
+  int_data: [] as Array<number | undefined>,
   repeat: [0],
   reward_type: 1,
-  reward_int_data: [] as number[],
+  reward_int_data: [] as Array<number | undefined>,
   reward_repeat: [0],
-  reward_selection_int_data: [] as number[],
+  reward_selection_int_data: [] as Array<number | undefined>,
   reward_selection_repeat: [] as number[],
 })
 
@@ -266,7 +275,7 @@ const onGrowTypeLimitChange = (job: Job | null, jobCode: number | null) => {
     formData.grow_type = -1
   }
   if (!job) {
-    formData.job = storage.getJobStr(jobCode)
+    formData.job = storage.getJobStr(jobCode!)
     formData.grow_type = -1
   } else {
     formData.job = job.job
@@ -292,7 +301,7 @@ const addRepeat = () => {
   formData.repeat.push(formData.repeat.length)
 }
 
-const rmRepeat = (idx: number) => {
+const rmRepeat = () => {
   if (formData.repeat.length === 1) {
     return
   }
@@ -317,7 +326,7 @@ const addRewardRepeat = () => {
   formData.reward_repeat.push(formData.reward_repeat.length)
 }
 
-const rmRewardRepeat = (idx: number) => {
+const rmRewardRepeat = () => {
   if (formData.reward_repeat.length === 1) {
     return
   }
@@ -328,7 +337,7 @@ const addRewardSelectionRepeat = () => {
   formData.reward_selection_repeat.push(formData.reward_selection_repeat.length)
 }
 
-const rmRewardSelectionRepeat = (idx: number) => {
+const rmRewardSelectionRepeat = () => {
   if (formData.reward_selection_repeat.length === 1) {
     return
   }
@@ -352,7 +361,7 @@ const rewardEnsureJob = computed(() => {
   return storage.getJobId(formData.job)
 })
 
-const onRewardGrowTypeChange = (idx: number, job: Job | null, jobCode: number | null) => {
+const onRewardGrowTypeChange = (idx: number, job: Job | null) => {
   formData.reward_int_data[idx] = job?.grow_type
 }
 
@@ -366,6 +375,31 @@ const copyResult = async () => {
   const clip = await navigator.clipboard
   await clip.writeText(genResult.content)
   message.success('已复制')
+}
+
+const selectorCtx = reactive({
+  show: false,
+  searchType: 1,
+
+  field: '',
+  idx: 0,
+})
+
+const showItemSelector = (comp: string, field: string, idx: number) => {
+  selectorCtx.field = field
+  selectorCtx.idx = idx
+  selectorCtx.searchType = Number(comp.slice(7))
+  selectorCtx.show = true
+}
+
+const onItemSelect = (id: number, name: string) => {
+  if (selectorCtx.idx === -1) {
+    (formData as any)[selectorCtx.field] = id;
+    (formData as any)[selectorCtx.field + '_name'] = name;
+  } else {
+    ((formData as any)[selectorCtx.field] as any)[selectorCtx.idx] = id;
+  }
+  selectorCtx.show = false
 }
 </script>
 
@@ -387,10 +421,18 @@ const copyResult = async () => {
           </n-radio-group>
         </n-form-item>
         <n-form-item label="发布npc">
-          <n-input-number v-model:value="formData.npc" :show-button="false"></n-input-number>
+          <n-input-group class="items-center">
+            <n-input-number v-model:value="formData.npc" :show-button="false"></n-input-number>
+            <n-button @click="showItemSelector('select-4', 'npc', -1)">搜索</n-button>
+            <span class="pl-3">{{ formData.npc_name }}</span>
+          </n-input-group>
         </n-form-item>
         <n-form-item label="任务引导npc">
-          <n-input-number v-model:value="formData.complete_npc" :show-button="false"></n-input-number>
+          <n-input-group class="items-center">
+            <n-input-number v-model:value="formData.complete_npc" :show-button="false"></n-input-number>
+            <n-button @click="showItemSelector('select-4', 'complete_npc', -1)">搜索</n-button>
+            <span class="pl-3">{{ formData.complete_npc_name }}</span>
+          </n-input-group>
         </n-form-item>
         <n-form-item label="职业, 留空为(all)">
           <grow-type-selector @change="onGrowTypeLimitChange" with-job></grow-type-selector>
@@ -429,7 +471,7 @@ const copyResult = async () => {
                     <n-select v-if="item.choices" :options="item.choices" v-model:value="formData.int_data[rt * intDataList.length + item.idx]"></n-select>
                     <n-input-number v-else v-model:value="formData.int_data[rt * intDataList.length + item.idx]" :show-button="false"></n-input-number>
 
-                    <item-selector v-if="item.comp === 'item'" v-model:value="formData.int_data[rt * intDataList.length + item.idx]"></item-selector>
+                    <n-button v-if="item.comp?.startsWith('select-')" @click="showItemSelector(item.comp, 'int_data', rt * intDataList.length + item.idx)">搜索</n-button>
                   </n-input-group>
                 </n-form-item>
               </n-form>
@@ -451,7 +493,7 @@ const copyResult = async () => {
                     <n-select v-if="item.choices" :options="item.choices" v-model:value="formData.reward_int_data[rt * rewardIntDataList.length + item.idx]"></n-select>
                     <n-input-number v-else v-model:value="formData.reward_int_data[rt * rewardIntDataList.length + item.idx]" :show-button="false"></n-input-number>
 
-                    <item-selector v-if="item.comp === 'item'" v-model:value="formData.reward_int_data[rt * rewardIntDataList.length + item.idx]"></item-selector>
+                    <n-button v-if="item.comp?.startsWith('select-')" @click="showItemSelector(item.comp, 'reward_int_data', rt * rewardIntDataList.length + item.idx)">搜索</n-button>
                     <grow-type-selector v-else-if="item.comp === 'grow_type'" :ensure-job="rewardEnsureJob" @change="onRewardGrowTypeChange(rt * rewardIntDataList.length + item.idx, $event)"></grow-type-selector>
                   </n-input-group>
                 </n-form-item>
@@ -469,7 +511,7 @@ const copyResult = async () => {
                   <n-form-item label="道具Id">
                     <n-input-group>
                       <n-input-number v-model:value="formData.reward_selection_int_data[rt * 2]" :min="1" :show-button="false"></n-input-number>
-                      <item-selector v-model:value="formData.reward_selection_int_data[rt * 2]"></item-selector>
+                      <n-button @click="showItemSelector('select-1', 'reward_selection_int_data', rt * 2)">搜索</n-button>
                     </n-input-group>
                   </n-form-item>
                   <n-form-item label="数量">
@@ -502,6 +544,10 @@ const copyResult = async () => {
           <n-input v-model:value="genResult.content" type="textarea" :rows="30"></n-input>
         </n-card>
       </n-modal>
+
+      <n-drawer v-model:show="selectorCtx.show" width="500" class="p-5">
+        <any-search :search-type="selectorCtx.searchType" @select="onItemSelect"></any-search>
+      </n-drawer>
     </template>
   </n-split>
 </template>

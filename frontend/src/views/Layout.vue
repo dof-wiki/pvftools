@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {CopyOutline, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline, Aperture, Shirt, ArrowUp, HelpOutline} from "@vicons/ionicons5";
+import {CopyOutline, Search, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline, Aperture, Shirt, ArrowUp, HelpOutline} from "@vicons/ionicons5";
 import {MenuOption, NIcon, useMessage} from "naive-ui";
 import {h, onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
@@ -11,6 +11,11 @@ const menuItems = [
     name: '设置',
     icon: SettingsOutline,
     to: '/'
+  },
+  {
+    name: '搜索',
+    icon: Search,
+    to: '/search'
   },
   {
     name: '世界掉落',
