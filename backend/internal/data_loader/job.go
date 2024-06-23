@@ -4,6 +4,7 @@ import (
 	"github.com/dof-wiki/godof/parser"
 	"pvftools/backend/common"
 	"pvftools/backend/common/consts"
+	"pvftools/backend/common/ctx"
 	"pvftools/backend/common/log"
 	"pvftools/backend/common/utils"
 	"pvftools/backend/dao"
@@ -70,6 +71,8 @@ func (l *JobDataLoader) Load() {
 	if len(jobs) > 0 {
 		common.DB.Create(&jobs)
 	}
+
+	ctx.Emit(consts.EventJobUpdate)
 }
 
 func init() {

@@ -11,7 +11,7 @@ const loading = ref(false)
 const handleSearch = async (query: string) => {
   loading.value = true
   try {
-    const result = await SearchByName(query)
+    const result = await SearchByName(query, 1)
     options.value = result.map((item) => {
       return {
         label: item.name,

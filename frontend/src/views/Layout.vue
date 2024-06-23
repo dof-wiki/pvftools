@@ -1,15 +1,21 @@
 <script setup lang="ts">
-import {CopyOutline, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline} from "@vicons/ionicons5";
+import {CopyOutline, Search, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline, Aperture, Shirt, ArrowUp, HelpOutline} from "@vicons/ionicons5";
 import {MenuOption, NIcon, useMessage} from "naive-ui";
 import {h, onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
 import {EventsOn} from "../../wailsjs/runtime";
+import storage from "../common/storage";
 
 const menuItems = [
   {
     name: '设置',
     icon: SettingsOutline,
     to: '/'
+  },
+  {
+    name: '搜索',
+    icon: Search,
+    to: '/search'
   },
   {
     name: '世界掉落',
@@ -38,9 +44,24 @@ const menuItems = [
   },
   {
     name: '异次元气息',
-    icon: CopyOutline,
+    icon: Aperture,
     to: '/breath',
   },
+  {
+    name: '装备属性生成',
+    icon: Shirt,
+    to: '/equ_attr',
+  },
+  {
+    name: '强化/增幅',
+    icon: ArrowUp,
+    to: '/upgrade',
+  },
+  {
+    name: '任务生成器',
+    icon: HelpOutline,
+    to: '/quest',
+  }
 ]
 
 const menuOptions: MenuOption[] = menuItems.map((item) => {
@@ -58,6 +79,8 @@ type ProgressController = {
 }
 
 const progressList = ref<ProgressController[]>([])
+
+const collapsed = ref(false)
 
 const message = useMessage()
 
@@ -79,6 +102,16 @@ onMounted(() => {
   EventsOn('error', async (msg: string) => {
     message.error(msg)
   })
+
+  EventsOn('job-update', async () => {
+    await storage.loadJobMap()
+  })
+
+  EventsOn('skill-update', async () => {
+    await storage.loadSkillMap()
+  })
+
+  storage.loadJobMap()
 })
 </script>
 
@@ -87,8 +120,20 @@ onMounted(() => {
     <n-layout-sider
         :width="200"
         bordered
+        collapse-mode="width"
+        :collapsed-width="64"
+        :collapsed="collapsed"
+        @collapse="collapsed = true"
+        @expand="collapsed = false"
+        show-trigger
     >
-      <n-menu :options="menuOptions" default-value="/"></n-menu>
+      <n-menu
+          :options="menuOptions"
+          :collapsed="collapsed"
+          :collapsed-width="64"
+          :collapsed-icon-size="22"
+          default-value="/"
+      ></n-menu>
       <div class="p-4" v-if="progressList.length > 0">
         <div class="font-bold text-yellow-500">数据加载进度</div>
         <div v-for="item in progressList" :key="item.name" class="flex items-center">

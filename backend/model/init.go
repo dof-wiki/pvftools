@@ -8,6 +8,9 @@ var models = []any{
 	new(Job),
 	new(Skill),
 	new(Stackable),
+	new(CustomAttrTmpl),
+	new(Npc),
+	new(Dungeon),
 }
 
 func init() {

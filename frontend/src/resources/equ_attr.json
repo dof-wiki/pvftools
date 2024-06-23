@@ -1,0 +1,1097 @@
+{
+  "base": [
+    {
+      "name": "重量",
+      "tmpl": "[weight]\n\t{0}"
+    },
+    {
+      "name": "耐久度",
+      "tmpl": "[durability]\n\t{0}"
+    },
+    {
+      "name": "力量",
+      "tmpl": "[physical attack]\n\t{0}"
+    },
+    {
+      "name": "智力",
+      "tmpl": "[magical attack]\n\t{0}"
+    },
+    {
+      "name": "体力",
+      "tmpl": "[physical defense]\n\t{0}"
+    },
+    {
+      "name": "精力",
+      "tmpl": "[magical defense]\n\t{0}"
+    },
+    {
+      "name": "物理攻击力",
+      "tmpl": "[equipment physical attack]\n\t{0}\t{1}",
+      "desc": [
+        "最大值",
+        "最小值"
+      ]
+    },
+    {
+      "name": "魔法攻击力",
+      "tmpl": "[equipment magical attack]\n\t{0}\t{1}",
+      "desc": [
+        "最大值",
+        "最小值"
+      ]
+    },
+    {
+      "name": "独立攻击力",
+      "tmpl": "[separate attack]\n\t{0}\t{1}",
+      "desc": [
+        "最大值",
+        "最小值"
+      ]
+    },
+    {
+      "name": "物理防御力",
+      "tmpl": "[equipment physical defense]\n\t{0}\t{1}",
+      "desc": [
+        "最大值",
+        "最小值"
+      ]
+    },
+    {
+      "name": "魔法防御力",
+      "tmpl": "[equipment magical defense]\n\t{0}\t{1}",
+      "desc": [
+        "最大值",
+        "最小值"
+      ]
+    },
+    {
+      "name": "抗魔",
+      "tmpl": "[anti evil]\n\t{0}"
+    },
+    {
+      "name": "物理暴击",
+      "tmpl": "[physical critical hit]\n\t{0}"
+    },
+    {
+      "name": "魔法暴击",
+      "tmpl": "[magical critical hit]\n\t{0}"
+    },
+    {
+      "name": "命中率",
+      "tmpl": "[stuck]\n\t{0}"
+    },
+    {
+      "name": "所有属性强化",
+      "tmpl": "[all elemental attack]\n\t{0}"
+    },
+    {
+      "name": "火属性强化",
+      "tmpl": "[fire attack]\n\t{0}"
+    },
+    {
+      "name": "暗属性强化",
+      "tmpl": "[dark attack]\n\t{0}"
+    },
+    {
+      "name": "光属性强化",
+      "tmpl": "[light attack]\n\t{0}"
+    },
+    {
+      "name": "冰属性强化",
+      "tmpl": "[ice attack]\n\t{0}"
+    },
+    {
+      "name": "硬直",
+      "tmpl": "[hit recovery]\n\t{0}"
+    },
+    {
+      "name": "回避率",
+      "tmpl": "[stuck resistance]\n\t{0}"
+    },
+    {
+      "name": "生命恢复速度",
+      "tmpl": "[HP regen speed]\n\t{0}"
+    },
+    {
+      "name": "法力恢复速度",
+      "tmpl": "[MP regen speed]\n\t{0}"
+    },
+    {
+      "name": "跳跃力",
+      "tmpl": "[jump power]\n\t{0}"
+    },
+    {
+      "name": "技能冷却时间",
+      "tmpl": "[skill cool time]\n\t{0}"
+    },
+    {
+      "name": "生命最大值",
+      "tmpl": "[HP MAX]\n\t{0}"
+    },
+    {
+      "name": "法力最大值",
+      "tmpl": "[MP MAX]\n\t{0}"
+    }
+  ],
+  "resistance": [
+    {
+      "name": "所有属性抗性",
+      "tmpl": "[all elemental resistance]\n\t{0}"
+    },
+    {
+      "name": "火属性抗性",
+      "tmpl": "[fire resistance]\n\t{0}"
+    },
+    {
+      "name": "暗属性抗性",
+      "tmpl": "[dark resistance]\n\t{0}"
+    },
+    {
+      "name": "光属性抗性",
+      "tmpl": "[light resistance]\n\t{0}"
+    },
+    {
+      "name": "冰属性抗性",
+      "tmpl": "[ice resistance]\n\t{0}"
+    },
+    {
+      "name": "异常抗性",
+      "tmpl": "[{0} resistance]\n\t{1}",
+      "choices": ["active_status", null]
+    },
+    {
+      "name": "所有异常状态抗性",
+      "tmpl": "[all activestatus resistance]\n\t{0}"
+    }
+  ],
+  "speed": [
+    {
+      "name": "攻击速度",
+      "tmpl": "[attack speed]\n\t{0}",
+      "desc": "x10"
+    },
+    {
+      "name": "移动速度",
+      "tmpl": "[move speed]\n\t{0}",
+      "desc": "x10"
+    },
+    {
+      "name": "释放速度",
+      "tmpl": "[cast speed]\n\t{0}",
+      "desc": "x10"
+    },
+    {
+      "name": "城镇移动速度",
+      "tmpl": "[room list move speed rate]\n\t{0}",
+      "desc": [
+        "增加倍率"
+      ]
+    },
+    {
+      "name": "x 轴移动速度",
+      "tmpl": "[x move dash speed]\n\t{0}",
+      "desc": [
+        "增加倍率"
+      ]
+    },
+    {
+      "name": "y 轴移动速度",
+      "tmpl": "[y move dash speed]\n\t{0}",
+      "desc": [
+        "增加倍率"
+      ]
+    },
+    {
+      "name": "z 轴移动速度",
+      "tmpl": "[z move dash speed]\n\t{0}",
+      "desc": [
+        "增加倍率"
+      ]
+    }
+  ],
+  "elemental_weapon": [
+    {
+      "name": "火属性",
+      "tmpl": "[fire element]"
+    },
+    {
+      "name": "暗属性",
+      "tmpl": "[dark element]"
+    },
+    {
+      "name": "光属性",
+      "tmpl": "[light element]"
+    },
+    {
+      "name": "冰属性",
+      "tmpl": "[ice element]"
+    }
+  ],
+  "choices": {
+    "job": [
+      {
+        "value": "swordman",
+        "label": "鬼剑士"
+      },
+      {
+        "value": "fighter",
+        "label": "格斗家"
+      },
+      {
+        "value": "at fighter",
+        "label": "男格斗家"
+      },
+      {
+        "value": "gunner",
+        "label": "神枪手"
+      },
+      {
+        "value": "at gunner",
+        "label": "女神枪手"
+      },
+      {
+        "value": "mage",
+        "label": "魔法师"
+      },
+      {
+        "value": "at mage",
+        "label": "男魔法师"
+      },
+      {
+        "value": "thief",
+        "label": "暗夜使者"
+      },
+      {
+        "value": "priest",
+        "label": "圣职者"
+      },
+      {
+        "value": "demonic swordman",
+        "label": "女圣职者"
+      },
+      {
+        "value": "creator mage",
+        "label": "女鬼剑士"
+      }
+    ],
+    "element": [
+      {
+        "value": "light",
+        "label": "光"
+      },
+      {
+        "value": "dark",
+        "label": "暗"
+      },
+      {
+        "value": "fire",
+        "label": "火"
+      },
+      {
+        "value": "water",
+        "label": "冰"
+      }
+    ],
+    "element_with_all": [
+      {
+        "value": "all",
+        "label": "无属性"
+      },
+      {
+        "value": "light",
+        "label": "光"
+      },
+      {
+        "value": "dark",
+        "label": "暗"
+      },
+      {
+        "value": "fire",
+        "label": "火"
+      },
+      {
+        "value": "water",
+        "label": "冰"
+      }
+    ],
+    "attack_type": [
+      {
+        "value": "magical",
+        "label": "魔法攻击"
+      },
+      {
+        "value": "physical",
+        "label": "物理攻击"
+      }
+    ],
+    "state": [
+      {
+        "value": "stand",
+        "label": "站立"
+      },
+      {
+        "value": "dash",
+        "label": "前冲"
+      },
+      {
+        "value": "attack",
+        "label": "攻击"
+      },
+      {
+        "value": "jump",
+        "label": "跳跃"
+      },
+      {
+        "value": "down",
+        "label": "下降/跌倒"
+      },
+      {
+        "value": "die",
+        "label": "死亡"
+      },
+      {
+        "value": "final attack",
+        "label": "普通攻击最后一击"
+      },
+      {
+        "value": "dash attack",
+        "label": "前冲攻击"
+      },
+      {
+        "value": "jump attack",
+        "label": "跳跃攻击"
+      }
+    ],
+    "active_status": [
+      {
+        "value": "any",
+        "label": "任意"
+      },
+      {
+        "value": "blind",
+        "label": "失明"
+      },
+      {
+        "value": "lightning",
+        "label": "感电"
+      },
+      {
+        "value": "burn",
+        "label": "灼伤"
+      },
+      {
+        "value": "freeze",
+        "label": "冰冻"
+      },
+      {
+        "value": "hold",
+        "label": "束缚"
+      },
+      {
+        "value": "sleep",
+        "label": "睡眠"
+      },
+      {
+        "value": "bleeding",
+        "label": "出血"
+      },
+      {
+        "value": "confuse",
+        "label": "混乱"
+      },
+      {
+        "value": "curse",
+        "label": "诅咒"
+      },
+      {
+        "value": "stone",
+        "label": "石化"
+      },
+      {
+        "value": "stun",
+        "label": "晕眩"
+      },
+      {
+        "value": "poison",
+        "label": "中毒"
+      },
+      {
+        "value": "weapon break",
+        "label": "破武器"
+      },
+      {
+        "value": "armor break",
+        "label": "破防具"
+      },
+      {
+        "value": "haste",
+        "label": "加速"
+      },
+      {
+        "value": "slow",
+        "label": "减速"
+      },
+      {
+        "value": "bless",
+        "label": "祝福"
+      }
+    ],
+    "attack_cond": [
+      {
+        "key": "counter",
+        "label": "破招"
+      },
+      {
+        "key": "back attack",
+        "label": "背击"
+      },
+      {
+        "key": "critical",
+        "label": "暴击"
+      },
+      {
+        "key": "stuck",
+        "label": "回避"
+      }
+    ],
+    "target_type": [
+      {
+        "value": "monster",
+        "label": "怪物"
+      },
+      {
+        "value": "apc",
+        "label": "APC"
+      }
+    ],
+    "race": [
+      {
+        "value": "野兽族",
+        "label": "beast"
+      },
+      {
+        "value": "植物族",
+        "label": "plant"
+      },
+      {
+        "value": "昆虫族",
+        "label": "insect"
+      },
+      {
+        "value": "不死族",
+        "label": "undead"
+      },
+      {
+        "value": "恶魔族",
+        "label": "devil"
+      },
+      {
+        "value": "精灵族",
+        "label": "spirit"
+      },
+      {
+        "value": "龙族",
+        "label": "dragon"
+      },
+      {
+        "value": "组合体",
+        "label": "hybrid"
+      },
+      {
+        "value": "人型",
+        "label": "human"
+      },
+      {
+        "value": "机械",
+        "label": "machine"
+      },
+      {
+        "value": "建筑",
+        "label": "fort armor"
+      },
+      {
+        "value": "哥布林",
+        "label": "goblin"
+      },
+      {
+        "value": "天使",
+        "label": "angel"
+      }
+    ],
+    "grade": [
+      {
+        "value": "common",
+        "label": "普通怪物"
+      },
+      {
+        "value": "champion",
+        "label": "精英怪物"
+      },
+      {
+        "value": "named",
+        "label": "深渊怪物"
+      },
+      {
+        "value": "boss",
+        "label": "Boss"
+      }
+    ],
+    "change_type": [
+      {"label": "+", "value": "+"},
+      {"label": "%", "value": "%"}
+    ],
+    "hpmp": [
+      {"label": "HP", "value": "HP"},
+      {"label": "MP", "value": "MP"}
+    ],
+    "stat": [
+      {"label": "力量", "value": "physical attack"},
+      {"label": "智力", "value": "magical attack"},
+      {"label": "体力", "value": "physical defense"},
+      {"label": "精神", "value": "magical defense"},
+      {"label": "攻击速度", "value": "attack speed"},
+      {"label": "施放速度", "value": "cast speed"},
+      {"label": "移动速度", "value": "move speed"},
+      {"label": "跳跃力", "value": "jump power"},
+      {"label": "装备物理攻击力", "value": "equipment physical attack"},
+      {"label": "装备魔法攻击力", "value": "equipment magical attack"},
+      {"label": "独立攻击力", "value": "separate attack"},
+      {"label": "装备物理防御", "value": "equipment physical defense"},
+      {"label": "装备魔法防御", "value": "equipment magical defense"},
+      {"label": "物理暴击", "value": "physical critical hit"},
+      {"label": "魔法暴击", "value": "magical critical hit"},
+      {"label": "命中率", "value": "stuck"},
+      {"label": "所有元素强化", "value": "all elemental"},
+      {"label": "火属性强化", "value": "fire attack"},
+      {"label": "暗属性强化", "value": "dark attack"},
+      {"label": "光属性强化", "value": "light attack"},
+      {"label": "冰属性强化", "value": "water attack"},
+      {"label": "火属性抗性", "value": "fire resistance"},
+      {"label": "暗属性抗性", "value": "dark resistance"},
+      {"label": "光属性抗性", "value": "light resistance"},
+      {"label": "冰属性抗性", "value": "water resistance"},
+      {"label": "所有属性抗性", "value": "all elemental resistance"},
+      {"label": "HP最大值", "value": "HP MAX"},
+      {"label": "MP最大值", "value": "MP MAX"},
+      {"label": "HP恢复速度", "value": "HP regen speed"},
+      {"label": "MP恢复速度", "value": "MP regen speed"},
+      {"label": "负重", "value": "inventory limit"},
+      {"label": "失明抗性", "value": "blind resistance"},
+      {
+        "value": "all activestatus resistance",
+        "label": "所有异常抗性"
+      },
+      {
+        "value": "lightning resistance",
+        "label": "感电抗性"
+      },
+      {
+        "value": "burn resistance",
+        "label": "灼伤抗性"
+      },
+      {
+        "value": "freeze resistance",
+        "label": "冰冻抗性"
+      },
+      {
+        "value": "hold resistance",
+        "label": "束缚抗性"
+      },
+      {
+        "value": "sleep resistance",
+        "label": "睡眠抗性"
+      },
+      {
+        "value": "bleeding resistance",
+        "label": "出血抗性"
+      },
+      {
+        "value": "confuse resistance",
+        "label": "混乱抗性"
+      },
+      {
+        "value": "curse resistance",
+        "label": "诅咒抗性"
+      },
+      {
+        "value": "stone resistance",
+        "label": "石化抗性"
+      },
+      {
+        "value": "stun resistance",
+        "label": "晕眩抗性"
+      },
+      {
+        "value": "poison resistance",
+        "label": "中毒抗性"
+      },
+      {
+        "value": "skill cool time",
+        "label": "技能冷却时间"
+      }
+    ],
+    "buff": [
+      {
+        "label": "霸体",
+        "value": "superarmor"
+      },
+      {
+        "label": "伪装",
+        "value": "comoflage"
+      },
+      {
+        "label": "无敌",
+        "value": "unbreakable"
+      }
+    ],
+    "target": [
+      {"label": "自己", "value": "myself"},
+      {"label": "敌人", "value": "enemy"},
+      {"label": "附近敌人", "value": "enemy near"},
+      {"label": "所有敌人", "value": "all enemy"},
+      {"label": "全队", "value": "party"}
+    ],
+    "obj_type": [
+      {"label": "跟随人物", "value": "-1"},
+      {"label": "正常", "value": "0"},
+      {"label": "陨石类", "value": "1"},
+      {"label": "垂直", "value": "3"}
+    ],
+    "equ_type": [
+      {"label": "武器", "value": "weapon"},
+      {"label": "TODO", "value": ""}
+    ],
+    "cond": [
+      {"label": "<", "value": "<"},
+      {"label": ">", "value": ">"},
+      {"label": "=", "value": "="}
+    ]
+  },
+  "trigger": [
+    {
+      "name": "冷却时间/ms",
+      "tmpl": "[cooltime]\n\t\t{0}"
+    },
+    {
+      "name": "施放技能",
+      "tmpl": "[casting]\n\t\t1"
+    },
+    {
+      "name": "使用特定技能",
+      "tmpl": "[event use skill]\n\t\t{0}\t{1}",
+      "desc": [
+        "职业",
+        "技能id"
+      ],
+      "choices": [
+        "job",
+        null
+      ]
+    },
+    {
+      "name": "攻击时",
+      "tmpl": "[attack success]\n\t\t1"
+    },
+    {
+      "name": "攻击时(MISS)",
+      "tmpl": "[attack success]\n\t\t2"
+    },
+    {
+      "name": "任意攻击",
+      "tmpl": "[event attack success]\n\t\t1"
+    },
+    {
+      "name": "任意攻击(MISS)",
+      "tmpl": "[event attack success]\n\t\t2"
+    },
+    {
+      "name": "被攻击时",
+      "tmpl": "[hit]\n\t\t1"
+    },
+    {
+      "name": "被攻击时(MISS)",
+      "tmpl": "[hit]\n\t\t2"
+    },
+    {
+      "name": "攻击类型",
+      "tmpl": "[attack type]\n\t\t`{0}`",
+      "choices": [
+        "attack_type"
+      ]
+    },
+    {
+      "name": "状态变更",
+      "tmpl": "[stat change]\n\t\t`{0}`\t`{1}`\t`{2}`\t{3}",
+      "choices": ["hpmp", "cond", "change_type", null],
+      "desc": ["属性", "条件", "类型", "数值"]
+    },
+    {
+      "name": "定时(ms)",
+      "tmpl": "[time]\n\t\t{0}\t1\t5000"
+    },
+    {
+      "name": "属性",
+      "tmpl": "[element]\n\t\t`{0}`",
+      "choices": [
+        "element"
+      ]
+    },
+    {
+      "name": "职业",
+      "tmpl": "[character]\n\t\t`{0}`",
+      "choices": [
+        "job"
+      ]
+    },
+    {
+      "name": "复活",
+      "tmpl": "[revive]\n\t\t1"
+    },
+    {
+      "name": "自身状态",
+      "tmpl": "[my state]\n\t\t`{0}`",
+      "choices": [
+        "state"
+      ]
+    },
+    {
+      "name": "自身状态持续",
+      "tmpl": "[keep my state]\n\t\t`{0}`\t{1}",
+      "choices": [
+        "state",
+        null
+      ],
+      "desc": [
+        "状态",
+        "ms"
+      ]
+    },
+    {
+      "name": "自身拥有apd",
+      "tmpl": "[my appendage]\n\t\t{0}"
+    },
+    {
+      "name": "自身进入异常状态",
+      "tmpl": "[my active status on]\n\t\t`{0}`",
+      "choices": [
+        "active_status"
+      ]
+    },
+    {
+      "name": "攻击状态",
+      "tmpl": "[attack condition]\n\t\t`{0}`",
+      "choices": [
+        "attack_cond"
+      ]
+    },
+    {
+      "name": "目标状态",
+      "tmpl": "[target state]\n\t\t`{0}`",
+      "choices": [
+        "state"
+      ]
+    },
+    {
+      "name": "目标异常状态",
+      "tmpl": "[target active status]\n\t\t`{0}`",
+      "choices": [
+        "active_status"
+      ]
+    },
+    {
+      "name": "额外杀伤",
+      "tmpl": "[overkill]\n\t\t1"
+    },
+    {
+      "name": "远距离",
+      "tmpl": "[distance]\n\t\t`far`"
+    },
+    {
+      "name": "队员数量",
+      "tmpl": "[party count]\n\t\t`=`\t{0}"
+    },
+    {
+      "name": "队友死亡",
+      "tmpl": "[party death]\n\t\t1"
+    },
+    {
+      "name": "组合键",
+      "tmpl": "[use command]\n\t\t1"
+    },
+    {
+      "name": "连击",
+      "tmpl": "[combo]\n\t\t{0}"
+    },
+    {
+      "name": "被伤害HP%",
+      "tmpl": "[check damage]\n\t\t`%`\t{0}"
+    },
+    {
+      "name": "指定地图",
+      "tmpl": "[dungeon check]\n\t\t{0}\n\t[/dungeon check]"
+    },
+    {
+      "name": "指定目标(可多组)",
+      "tmpl": "[target check]\n\t\t`{0}`\t{1}\n\t[/target check]",
+      "desc": [
+        "类型",
+        "id"
+      ],
+      "choices": [
+        "target_type",
+        null
+      ]
+    },
+    {
+      "name": "目标种族",
+      "tmpl": "[target type]\n\t\t`{0}`",
+      "choices": [
+        "race"
+      ]
+    },
+    {
+      "name": "怪物稀有度",
+      "tmpl": "[target grade]\n\t\t`{0}`",
+      "choices": ["grade"]
+    },
+    {
+      "name": "pvp禁用",
+      "tmpl": "[disable pvp]\n\t\t1"
+    },
+    {
+      "name": "解除装备",
+      "tmpl": "[remove equip]"
+    },
+    {
+      "name": "队友穿戴装备",
+      "tmpl": "[any body equipped]\n\t\t[target]\n\t\t\t'party exclude self'\n\t\t[indexes]\n\t\t\t{0}\n\t\t[/indexes]\n\t[/any body equipped]"
+    }
+  ],
+  "then": [
+    {
+      "name": "目标",
+      "tmpl": "[target]\n\t\t`{0}`\t-1",
+      "choices": ["target"]
+    },
+    {
+      "name": "触发几率%",
+      "tmpl": "[probability]\n\t\t{0}"
+    },
+    {
+      "name": "持续时间/ms",
+      "tmpl": "[duration]\n\t\t{0}"
+    },
+    {
+      "name": "装备持续时间(apd)/ms",
+      "tmpl": "[equipment duration]\n\t\t{0}"
+    },
+    {
+      "name": "附加APD",
+      "tmpl": "[appendage]\n\t\t{0}",
+      "desc": ["APD id"]
+    },
+    {
+      "name": "属性攻击",
+      "tmpl": "[elemental weapon]\n\t\t`{0}`",
+      "choices": ["element"]
+    },
+    {
+      "name": "角色属性(可重复触发)",
+      "tmpl": "[stat]\n\t\t`{0}`\t`{1}`\t{2}",
+      "choices": ["stat", "change_type", null],
+      "desc": ["属性", "增加类型", "数值"]
+    },
+    {
+      "name": "角色属性(不可重复触发)",
+      "tmpl": "[stat by condition]\n\t\t`{0}`\t`{1}`\t{2}",
+      "choices": ["stat", "change_type", null],
+      "desc": ["属性", "增加类型", "数值"]
+    },
+    {
+      "name": "条件角色属性(每xx点xx可提升xx点/%xx)",
+      "tmpl": "[stat change by stat]\n\t\t`{0}`\t-1\t`{1}`\t{2}\t`{3}`\t`{4}`\t{5}\t{6}",
+      "desc": ["目标", "条件属性", "需求值", "改变属性", "改变类型", "改变值", "上限"],
+      "choices": ["target", "stat", null, "stat", "change_type", null, null]
+    },
+    {
+      "name": "光环",
+      "tmpl": "[aura active]\n\t\t`{0}`\t`{1}`\t{2}\t{3}",
+      "choices": ["stat", "change_type", null, null],
+      "desc": ["属性", "增加类型", "数值", "范围/px"]
+    },
+    {
+      "name": "附加伤害(白字)",
+      "tmpl": "[add absolute damage]\n\t\t`{0}`\t`{1}`\t{2}",
+      "choices": ["element_with_all", "change_type", null],
+      "desc": ["属性", "增加类型", "数值"]
+    },
+    {
+      "name": "增加伤害(黄字)",
+      "tmpl": "[increase damage]\n\t\t`{0}`\t{1}",
+      "choices": ["change_type", null],
+      "desc": ["增加类型", "数值"]
+    },
+    {
+      "name": "暴击伤害",
+      "tmpl": "[increase critical damage]\n\t\t`{0}`\t{1}",
+      "choices": ["change_type", null],
+      "desc": ["增加类型", "数值"]
+    },
+    {
+      "name": "削减HP%(对精英效果为1/3, 对领主和深渊怪物效果为1/6)",
+      "tmpl": "[weakness]\n\t\t{0}"
+    },
+    {
+      "name": "附加失明",
+      "tmpl": "[active status]\n\t\t`blind`\t{0}\t{1}\t{2}",
+      "desc": ["等级", "视野减少%", "命中率减少%"]
+    },
+    {
+      "name": "附加感电",
+      "tmpl": "[active status]\n\t\t`lightning`\t{0}\t{1}",
+      "desc": ["等级", "感电攻击力"]
+    },
+    {
+      "name": "附加灼烧",
+      "tmpl": "[active status]\n\t\t`burn`\t{0}\t{1}\t{2}\t1\t{3}",
+      "desc": ["等级", "对象灼烧伤害/0.5s", "周围对象灼烧总伤害", "对周围对象的灼烧伤害间隔时间/ms"]
+    },
+    {
+      "name": "附加冰冻",
+      "tmpl": "[active status]\n\t\t`freeze`\t{0}",
+      "desc": ["等级"]
+    },
+    {
+      "name": "附加束缚",
+      "tmpl": "[active status]\n\t\t`hold`\t{0}",
+      "desc": ["等级"]
+    },
+    {
+      "name": "附加睡眠",
+      "tmpl": "[active status]\n\t\t`sleep`\t{0}",
+      "desc": ["等级"]
+    },
+    {
+      "name": "附加出血",
+      "tmpl": "[active status]\n\t\t`bleeding`\t{0}\t{1}",
+      "desc": ["出血", "伤害/0.5s"]
+    },
+    {
+      "name": "附加混乱",
+      "tmpl": "[active status]\n\t\t`confuse`\t{0}\t1",
+      "desc": ["等级"]
+    },
+    {
+      "name": "附加石化",
+      "tmpl": "[active status]\n\t\t`stone`\t{0}\t{1}",
+      "desc": ["等级", "解除时伤害"]
+    },
+    {
+      "name": "附加中毒",
+      "tmpl": "[active status]\n\t\t`poison`\t{0}\t{1}",
+      "desc": ["等级", "每0.5s伤害"]
+    },
+    {
+      "name": "附加破武器",
+      "tmpl": "[active status]\n\t\t`weapon break`\t{0}\t{1}",
+      "desc": ["等级", "耐久度消耗增加倍数"]
+    },
+    {
+      "name": "附加破甲",
+      "tmpl": "[active status]\n\t\t`armor break`\t{0}\t{1}",
+      "desc": ["等级", "耐久度消耗增加倍数"]
+    },
+    {
+      "name": "异常状态提升",
+      "tmpl": "[active status control info]\n\t\t`{0}`\t{1}\t{2}\t0\t{3}",
+      "desc": ["异常", "几率", "等级", "伤害提升%"],
+      "choices": ["active_status", null, null, null]
+    },
+    {
+      "name": "加速状态",
+      "tmpl": "[active status]\n\t\t`haste`\t{0}\t{1}\t{2}",
+      "desc": ["等级", "攻击速度增加%", "移动速度增加%"]
+    },
+    {
+      "name": "减速状态",
+      "tmpl": "[active status]\n\t\t`slow`\t{0}\t{1}\t{2}",
+      "desc": ["等级", "攻击速度减少%", "移动速度减少%"]
+    },
+    {
+      "name": "祝福状态",
+      "tmpl": "[active status]\n\t\t`bless`\t{0}\t{1}\t{2}\t{3}\t{4}",
+      "desc": ["等级", "力量", "体力", "智力", "精神"]
+    },
+    {
+      "name": "buff(霸体/伪装/无敌)",
+      "tmpl": "[buff]\n\t\t`{0}`",
+      "choices": ["buff"]
+    },
+    {
+      "name": "技能冷却时间(单个)",
+      "tmpl": "[skill cooltime reset]\n\t\t{0}\t`%`\t{1}",
+      "desc": ["技能id", "百分比(负数为减少)"]
+    },
+    {
+      "name": "施放技能",
+      "tmpl": "[perform skill]\n\t\t{0}\t{1}\t{2}",
+      "desc": ["职业", "技能id", "等级"],
+      "choices": ["job", null, null]
+    },
+    {
+      "name": "结束技能",
+      "tmpl": "[end skill]\n\t\t{0}\t{1}",
+      "desc": ["职业", "技能id"],
+      "choices": ["job", null]
+    },
+    {
+      "name": "恢复血蓝",
+      "tmpl": "[restore]\n\t\t`{0}`\t{1}\t{2}\t{3}",
+      "desc": ["HP/MP" ,"类型", "值", "恢复时间(0为立即恢复)"],
+      "choices": ["hpmp", "change_type", null, null, null]
+    },
+    {
+      "name": "消耗道具",
+      "tmpl": "[consume item]\n\t\t{0}\t{1}",
+      "desc": ["物品id", "数量"]
+    },
+    {
+      "name": "TODO:特效",
+      "tmpl": "[passive object]\n\t\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t``",
+      "desc": ["特效id", "x", "y", "z", "等级", "出现方式"],
+      "choices": [null, null, null, null, null, "obj_type"]
+    },
+    {
+      "name": "TODO:发言",
+      "tmpl": "[speech on]\n\t\t"
+    },
+    {
+      "name": "召唤怪物",
+      "tmpl": "[summon monster]\n\t\t{0}\t{1}\t{2}\t{3}",
+      "desc": ["怪物id", "等级", "存在时间/ms", "数量"]
+    },
+    {
+      "name": "召唤APC",
+      "tmpl": "[summon apc]\n\t\t{0}\t{1}\t{2}\t{3}",
+      "desc": ["APC id", "等级", "存在时间/ms", "数量"]
+    },
+    {
+      "name": "驱散",
+      "tmpl": "[disenchant]\n\t\t1"
+    },
+    {
+      "name": "反伤%",
+      "tmpl": "[thorn]\n\t\t{0}"
+    },
+    {
+      "name": "击退",
+      "tmpl": "[knockback]\n\t\t1"
+    },
+    {
+      "name": "耐久度减少",
+      "tmpl": "[reduction]\n\t\t`{0}`\t{1}",
+      "desc": ["部位", "数值"],
+      "choices": ["equ_type"]
+    }
+  ]
+}

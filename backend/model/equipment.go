@@ -9,3 +9,11 @@ type Equipment struct {
 	PartSet   int    `json:"part_set"`
 	MiniLevel int    `json:"mini_level"`
 }
+
+func (e *Equipment) GetCode() int {
+	return e.Code
+}
+
+func (e *Equipment) GetName() string {
+	return e.Name
+}

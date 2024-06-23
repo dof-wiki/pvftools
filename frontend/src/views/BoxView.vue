@@ -169,7 +169,7 @@ const simpleAddItem = () => {
 }
 
 const doSimpleAddItem = () => {
-  const items = simpleAddItemForm.data.split('\t').map(id => {
+  const items = simpleAddItemForm.data.split(/\s+/).map(id => {
     return {
       id: parseInt(id),
       count: 1,

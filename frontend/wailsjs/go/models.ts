@@ -211,6 +211,26 @@ export namespace data_loader {
 
 export namespace model {
 	
+	export class CustomAttrTmpl {
+	    id: number;
+	    name: string;
+	    tmpl: string;
+	    desc: string;
+	    choices: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new CustomAttrTmpl(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
+	        this.name = source["name"];
+	        this.tmpl = source["tmpl"];
+	        this.desc = source["desc"];
+	        this.choices = source["choices"];
+	    }
+	}
 	export class Equipment {
 	    code: number;
 	    name: string;
@@ -415,6 +435,28 @@ export namespace proto {
 		    }
 		    return a;
 		}
+	}
+	export class UpgradeItem {
+	    level: number;
+	    fail_rate: number;
+	    fail_op: number;
+	    fail_op_value: number;
+	    cost_id: number;
+	    cost_count: number;
+	
+	    static createFrom(source: any = {}) {
+	        return new UpgradeItem(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.level = source["level"];
+	        this.fail_rate = source["fail_rate"];
+	        this.fail_op = source["fail_op"];
+	        this.fail_op_value = source["fail_op_value"];
+	        this.cost_id = source["cost_id"];
+	        this.cost_count = source["cost_count"];
+	    }
 	}
 
 }

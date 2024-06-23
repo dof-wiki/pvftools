@@ -36,6 +36,7 @@ const (
 	// etc
 	LabelBasisOfRarityDicision = "basis of rarity dicision"
 	LabelWorldDrop             = "world drop"
+	LabelTable                 = "table"
 
 	// skill
 	LabelDungeon       = "dungeon"

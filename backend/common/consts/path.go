@@ -6,6 +6,8 @@ const (
 	LstPathEquipment = "equipment/equipment.lst"
 	LstPathSkill     = "skill/skilllist.lst"
 	LstPathStackable = "stackable/stackable.lst"
+	LstPathNpc       = "npc/npc.lst"
+	LstPathDgn       = "dungeon/dungeon.lst"
 )
 
 const (
@@ -14,6 +16,9 @@ const (
 	PathMonsterExtraDrop = "etc/itemdropinfo_monseter_extra.etc"
 	PathClearRewardDrop  = "etc/itemdropinfo_clearreward.etc"
 	PathWorldDrop        = "etc/worlddrop.etc"
+	PathUpgrade          = "etc/upgrade.etc"
+	PathAmplifyUpgrade   = "etc/amplifyupgrade.etc"
+	PathUpgradeSeparate  = "etc/upgrade_separate.etc"
 
 	PathBreathRed    = "stackable/consumption_1254.stk"
 	PathBreathBlue   = "stackable/consumption_1255.stk"

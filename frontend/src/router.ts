@@ -6,6 +6,10 @@ import BatchHandleView from "./views/BatchHandleView.vue";
 import SkillView from "./views/SkillView.vue";
 import BoxView from "./views/BoxView.vue";
 import BreathView from "./views/BreathView.vue";
+import EquAttrView from "./views/EquAttrView.vue";
+import UpgradeView from "./views/UpgradeView.vue";
+import QuestView from "./views/QuestView.vue";
+import AnySearch from "./components/AnySearch.vue";
 
 const routes: RouteRecordRaw[] = [
     { path: '/', component: IndexView },
@@ -15,6 +19,10 @@ const routes: RouteRecordRaw[] = [
     { path: '/skill', component: SkillView },
     { path: '/box', component: BoxView },
     { path: '/breath', component: BreathView },
+    { path: '/equ_attr', component: EquAttrView },
+    { path: '/upgrade', component: UpgradeView },
+    { path: '/quest', component: QuestView },
+    { path: '/search', component: AnySearch },
 ]
 
 const router = createRouter({

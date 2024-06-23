@@ -44,3 +44,19 @@ export const EquTypes = [
     value: 'magic stone',
   },
 ]
+
+export const DgnDifficulty = [
+  {label: '不限', value: -1},
+  {label: '普通', value: 0},
+  {label: '冒险', value: 1},
+  {label: '王者', value: 2},
+  {label: '地狱', value: 3}
+]
+
+export enum SearchType {
+  Stackable = 1,
+  Equipment = 2,
+  Skill = 3,
+  Npc = 4,
+  Dungeon = 5,
+}

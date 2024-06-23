@@ -2,7 +2,10 @@ package main
 
 import (
 	"embed"
+	"fmt"
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"pvftools/backend/api"
+	"pvftools/backend/common/ctx"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
@@ -15,6 +18,16 @@ var assets embed.FS
 func main() {
 	// Create an instance of the app structure
 	app := api.NewApp()
+
+	defer func() {
+		if err := recover(); err != nil {
+			runtime.MessageDialog(*ctx.Ctx, runtime.MessageDialogOptions{
+				Type:    runtime.ErrorDialog,
+				Title:   "发生了严重错误",
+				Message: fmt.Sprintf("%v", err),
+			})
+		}
+	}()
 
 	// Create application with options
 	err := wails.Run(&options.App{

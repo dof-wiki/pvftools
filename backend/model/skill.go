@@ -7,3 +7,11 @@ type Skill struct {
 	Name string `json:"name" gorm:"index"`
 	Path string `json:"path"`
 }
+
+func (s *Skill) GetCode() int {
+	return s.Code
+}
+
+func (s *Skill) GetName() string {
+	return s.Name
+}
