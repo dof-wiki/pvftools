@@ -20,9 +20,6 @@ jobs:
           - name: 'pvftools'
             platform:  'windows/amd64'
             os: 'windows-latest'
-          - name: 'pvftools'
-            platform:  'darwin/universal'
-            os: 'macos-latest'
 
     runs-on: ${{ matrix.build.os }}
     steps:
