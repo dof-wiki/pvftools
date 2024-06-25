@@ -14,12 +14,24 @@ export function CheckDataUpdate() {
   return window['go']['api']['App']['CheckDataUpdate']();
 }
 
+export function CheckUpdate() {
+  return window['go']['api']['App']['CheckUpdate']();
+}
+
 export function DelWorldDropItem(arg1, arg2, arg3) {
   return window['go']['api']['App']['DelWorldDropItem'](arg1, arg2, arg3);
 }
 
 export function DeleteCustomAttrTmpl(arg1) {
   return window['go']['api']['App']['DeleteCustomAttrTmpl'](arg1);
+}
+
+export function DoUpdate() {
+  return window['go']['api']['App']['DoUpdate']();
+}
+
+export function DownloadNewVersion() {
+  return window['go']['api']['App']['DownloadNewVersion']();
 }
 
 export function EquipmentBatchHandle(arg1, arg2) {

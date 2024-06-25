@@ -15,9 +15,15 @@ export function AddWorldDropItem(arg1:number,arg2:number,arg3:number,arg4:number
 
 export function CheckDataUpdate():Promise<Array<data_loader.CheckUpdateResult>>;
 
+export function CheckUpdate():Promise<boolean>;
+
 export function DelWorldDropItem(arg1:number,arg2:number,arg3:Array<number>):Promise<void>;
 
 export function DeleteCustomAttrTmpl(arg1:number):Promise<void>;
+
+export function DoUpdate():Promise<void>;
+
+export function DownloadNewVersion():Promise<void>;
 
 export function EquipmentBatchHandle(arg1:Array<number>,arg2:Array<script.Action>):Promise<void>;
 

@@ -7,9 +7,15 @@ toolchain go1.22.1
 require (
 	github.com/adrg/xdg v0.4.0
 	github.com/glebarez/sqlite v1.11.0
-	github.com/wailsapp/wails/v2 v2.8.1
+	github.com/tidwall/gjson v1.17.1
+	github.com/wailsapp/wails/v2 v2.8.0
 	go.uber.org/zap v1.27.0
 	gorm.io/gorm v1.25.9
+)
+
+require (
+	github.com/tidwall/match v1.1.1 // indirect
+	github.com/tidwall/pretty v1.2.0 // indirect
 )
 
 require (
@@ -24,7 +30,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/labstack/echo/v4 v4.10.2 // indirect
-	github.com/labstack/gommon v0.4.0 // indirect
+	github.com/labstack/gommon v0.4.0
 	github.com/leaanthony/go-ansi-parser v1.6.0 // indirect
 	github.com/leaanthony/gosod v1.0.3 // indirect
 	github.com/leaanthony/slicer v1.6.0 // indirect

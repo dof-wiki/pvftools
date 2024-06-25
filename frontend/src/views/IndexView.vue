@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {CheckDataUpdate, GetUserSettings, LoadData, SetUserSettings} from '../../wailsjs/go/api/App'
+import {CheckDataUpdate, CheckUpdate, GetUserSettings, LoadData, SetUserSettings} from '../../wailsjs/go/api/App'
 import {onMounted, ref} from "vue";
 import {useMessage} from 'naive-ui'
 import {data_loader, setting} from "../../wailsjs/go/models";
@@ -60,6 +60,17 @@ const selectAll = () => {
 
 const selectUpdate = () => {
   updateItems.value = updateResult.value.filter(it => it.need_update).map(it => it.key)
+}
+
+const selfUpdateLoading = ref(false)
+
+const checkSelfUpdate = async () => {
+  selfUpdateLoading.value = true
+  try {
+    await CheckUpdate()
+  } finally {
+    selfUpdateLoading.value = false
+  }
 }
 
 onMounted(async () => {
@@ -139,6 +150,12 @@ onMounted(async () => {
         </template>
       </n-card>
     </n-spin>
+
+    <n-card class="mt-5">
+      <n-flex>
+        <n-button type="primary" @click="checkSelfUpdate" :loading="selfUpdateLoading">检查更新</n-button>
+      </n-flex>
+    </n-card>
   </div>
 </template>
 

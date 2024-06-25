@@ -44,3 +44,9 @@ func (p *ProgressController) GetProgress() float64 {
 func (p *ProgressController) IsEnd() bool {
 	return p.current >= p.total
 }
+
+func (p *ProgressController) Write(buf []byte) (int, error) {
+	n := len(buf)
+	p.Increase(n)
+	return n, nil
+}

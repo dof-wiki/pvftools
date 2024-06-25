@@ -1,19 +1,18 @@
-# README
+# PVFTools
 
-## About
+PVFUtility 拓展工具, 需要配合 PVFUtility 食用
 
-This is the official Wails Vue-TS template.
+- 世界掉落编辑
+- 怪物掉率/深渊掉率/翻牌掉率修改
+- 礼盒生成器
+- 技能数据修改
+- 装备批量处理
+- 异次元气息编辑
+- 装备属性模板生成
+- 强化/增幅数据修改
+- 任务生成器
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
-
-## Live Development
-
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
-
-## Building
-
-To build a redistributable, production mode package, use `wails build`.
+## 已知bug
+1. 某些情况下最小化或者失焦后重新激活窗口会 crash, 可能为 windows 系统问题, 
+可参考 [Error 0x80070718 Not enough quota is available to process this command
+   ](https://answers.microsoft.com/en-us/windows/forum/all/error-0x80070718-not-enough-quota-is-available-to/08d799ce-835e-4bf1-a1f8-4498a48ffe99)尝试解决, 或重启大法

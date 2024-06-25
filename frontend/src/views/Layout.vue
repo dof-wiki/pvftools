@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import {CopyOutline, Search, Dice, GiftOutline, GlobeOutline, Nuclear, SettingsOutline, Aperture, Shirt, ArrowUp, HelpOutline} from "@vicons/ionicons5";
 import {MenuOption, NIcon, useMessage} from "naive-ui";
-import {h, onMounted, ref} from "vue";
+import {h, onMounted, reactive, ref} from "vue";
 import {RouterLink} from "vue-router";
 import {EventsOn} from "../../wailsjs/runtime";
 import storage from "../common/storage";
+import {DownloadNewVersion} from "../../wailsjs/go/api/App";
 
 const menuItems = [
   {
@@ -84,6 +85,17 @@ const collapsed = ref(false)
 
 const message = useMessage()
 
+const selfUpdateCtx = reactive({
+  show: false,
+  version: '',
+  message: '',
+})
+
+const downloadNewVersion = async () => {
+  selfUpdateCtx.show = false
+  await DownloadNewVersion()
+}
+
 onMounted(() => {
   EventsOn('progress-start', async (name: string, total: number) => {
     progressList.value.push({name, total, current: 0})
@@ -109,6 +121,12 @@ onMounted(() => {
 
   EventsOn('skill-update', async () => {
     await storage.loadSkillMap()
+  })
+
+  EventsOn('has-self-update', async (version: string, msg: string) => {
+    selfUpdateCtx.version = version
+    selfUpdateCtx.message = msg
+    selfUpdateCtx.show = true
   })
 
   storage.loadJobMap()
@@ -150,6 +168,23 @@ onMounted(() => {
       <router-view></router-view>
     </n-layout-content>
   </n-layout>
+
+  <n-modal v-model:show="selfUpdateCtx.show">
+    <n-card style="width: 50%;">
+      <template #header>
+        <div class="text-lg">
+          有新版本可用: {{ selfUpdateCtx.version }}
+        </div>
+      </template>
+      <n-input readonly type="textarea" autosize v-model:value="selfUpdateCtx.message"></n-input>
+      <template #footer>
+        <n-flex justify="end">
+          <n-button @click="selfUpdateCtx.show = false">暂不更新</n-button>
+          <n-button type="primary" @click="downloadNewVersion">立即更新</n-button>
+        </n-flex>
+      </template>
+    </n-card>
+  </n-modal>
 </template>
 
 <style scoped>

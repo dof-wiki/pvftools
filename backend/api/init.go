@@ -5,8 +5,10 @@ import (
 	"github.com/dof-wiki/godof/parser"
 	"github.com/dof-wiki/godof/parser/tree_parser"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
+	"pvftools/backend/common/consts"
 	"pvftools/backend/common/ctx"
 	"pvftools/backend/internal/data_source"
+	"pvftools/backend/internal/updater"
 	"sync"
 )
 
@@ -18,6 +20,8 @@ type App struct {
 	parserCache map[string]*parser.Parser
 	lstParser   map[string]*parser.LstParser
 	treeParser  map[string]*tree_parser.TreeParser
+
+	updater *updater.Updater
 }
 
 // NewApp creates a new App application struct
@@ -26,6 +30,7 @@ func NewApp() *App {
 		parserCache: make(map[string]*parser.Parser),
 		lstParser:   make(map[string]*parser.LstParser),
 		treeParser:  make(map[string]*tree_parser.TreeParser),
+		updater:     updater.NewUpdater(),
 	}
 }
 
@@ -34,6 +39,16 @@ func NewApp() *App {
 func (a *App) Startup(_ctx context.Context) {
 	a.ctx = _ctx
 	ctx.Ctx = &_ctx
+	go a.checkUpdate()
+}
+
+func (a *App) checkUpdate() bool {
+	if !a.updater.CheckUpdate() {
+		return false
+	}
+	newVer, msg := a.updater.GetUpdateInfo()
+	runtime.EventsEmit(a.ctx, consts.EventHasSelfUpdate, newVer, msg)
+	return true
 }
 
 func (a *App) getParserInner(path string) *parser.Parser {
