@@ -102,10 +102,11 @@ func (u *Updater) AutoUpdate() {
 		return
 	}
 	u.download()
+	GenScript(u.curExecutable, u.newExecutable)
 }
 
 func (u *Updater) DoUpdate() {
-	cmd := exec.Command("pvftools_updater")
+	cmd := exec.Command("pvftools_updater.bat")
 	err := cmd.Start()
 	if err != nil {
 		log.LogError("更新程序启动失败")
